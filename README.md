@@ -41,13 +41,9 @@
 
 `TO DO: Fill in Project Description`
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ### Built With
 
 TO DO: `Include a bunch of Frameworks`
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ### Getting Started
