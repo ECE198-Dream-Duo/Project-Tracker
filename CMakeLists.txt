@@ -1,60 +1,144 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.15.3)
+
 project(LineTrackingRobot)
 
-# Specify the version of the CMake STM32 toolchain file
-set(CMAKE_TOOLCHAIN_FILE /path/to/stm32_toolchain.cmake)
+#enable_language(C ASM)
+#set(CMAKE_C_STANDARD 99)
+#set(CMAKE_C_STANDARD_REQUIRED ON)
+#set(CMAKE_C_EXTENSIONS OFF)
 
-# Set the STM32 target device (e.g., STM32F4xx)
-set(STM32_TARGET_DEVICE STM32F4xx)
+enable_language(CXX C ASM)
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS OFF)
 
-# Set the STM32 HAL library directory (modify as needed)
-set(STM32_HAL_LIBRARY_PATH /workspace/stm32_hal_library)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Set the STM32CubeMX-generated source files directory (modify as needed)
-set(STM32_CUBE_SRC_DIR ${CMAKE_SOURCE_DIR}/src)
+find_program(CCACHE_PROGRAM ccache)
 
-# Set the STM32CubeMX-generated include files directory (modify as needed)
-set(STM32_CUBE_INC_DIR ${CMAKE_SOURCE_DIR}/inc)
+if (CCACHE_PROGRAM)
+        message(NOTICE "ccache is enabled (found here: ${CCACHE_PROGRAM})")
+        set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "\"${CCACHE_PROGRAM}\"")
+        set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "\"${CCACHE_PROGRAM}\"")
+else ()
+        message(FATAL_ERROR "ccache has not been found")
+endif ()
 
-# Add your source files
-set(SOURCE_FILES
-    src/main.cpp
-    # Add other source files here
+set(STM32CUBEMX_GENERATED_FILES
+
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c
+
+        Core/Inc/main.h
+        Core/Inc/stm32f4xx_hal_conf.h
+        Core/Inc/stm32f4xx_it.h
+
+        Core/Src/main.c
+        Core/Src/stm32f4xx_hal_msp.c
+        Core/Src/stm32f4xx_it.c
+        Core/Src/system_stm32f4xx.c
+        startup_stm32f401xe.s
+
 )
 
-# Add STM32CubeMX-generated source and include directories
-include_directories(${STM32_CUBE_INC_DIR})
-include_directories(${STM32_CUBE_SRC_DIR})
-
-# Add STM32 HAL library (modify as needed)
-link_directories(${STM32_HAL_LIBRARY_PATH})
-
-# Create the STM32 executable
-add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${STM32_CUBE_SRC_DIR}/stm32f4xx_hal.c)
-
-# Link the STM32 HAL library (modify as needed)
-target_link_libraries(${PROJECT_NAME} stm32f4xx_hal)
-
-# Specify the linker script file for the STM32 device (modify as needed)
-target_link_options(${PROJECT_NAME} PRIVATE -T/workspace/STM32F4xx_FLASH.ld)
-
-# Set compiler and linker flags (modify as needed)
-target_compile_options(${PROJECT_NAME} PRIVATE -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard)
-target_link_options(${PROJECT_NAME} PRIVATE -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard)
-
-# Specify the output format and file extension (modify as needed)
-set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".elf")
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "${PROJECT_NAME}")
-
-# Create binary (.bin) and hex (.hex) output files
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:${PROJECT_NAME}> ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.bin
-    COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:${PROJECT_NAME}> ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.hex
+# To disable compiler warnings, etc. for certain files (3rd party files mainly)
+set_source_files_properties(
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c
+        Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
+        PROPERTIES
+        COMPILE_FLAGS -Wno-unused-parameter
 )
 
-# Print size information for the binary
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_SIZE} --format=berkeley $<TARGET_FILE:${PROJECT_NAME}>
+set(EXECUTABLE ${PROJECT_NAME}.out)
+
+add_executable(${EXECUTABLE} ${STM32CUBEMX_GENERATED_FILES}
+        Core/Inc/retarget.h
+        Core/Src/retarget.c
+        source/application.cpp
 )
 
-# From ChatGpt
+target_compile_definitions(${EXECUTABLE} PRIVATE
+        -DUSE_HAL_DRIVER
+        -DSTM32F401xE
+        )
+
+target_include_directories(${EXECUTABLE} SYSTEM PRIVATE # adding system will also discard warnings from header files
+        Core/Inc
+        Drivers/STM32F4xx_HAL_Driver/Inc
+        Drivers/CMSIS/Device/ST/STM32F4xx/Include
+        Drivers/CMSIS/Include
+)
+
+target_include_directories(${EXECUTABLE} PRIVATE
+        source
+)
+
+target_compile_options(${EXECUTABLE} PRIVATE
+        -mcpu=cortex-m4
+        -mthumb
+        -mfpu=fpv4-sp-d16
+        -mfloat-abi=hard
+
+        -fdata-sections
+        -ffunction-sections
+
+        -Wall
+        -Wextra
+        -pedantic
+
+        #-fno-exceptions # C++ specific flag
+        #-fno-rtti # C++ specific flag
+        $<$<COMPILE_LANGUAGE:CXX>:@${CMAKE_SOURCE_DIR}/gcc-options-cxx.txt> # add C++ options (including the two above)
+
+        $<$<CONFIG:Debug>:-Og> #  If CONFIG is Debug, then add option -Og, otherwise add nothing
+        )
+
+target_link_options(${EXECUTABLE} PRIVATE
+        -T${CMAKE_SOURCE_DIR}/STM32F401RETx_FLASH.ld
+        -mcpu=cortex-m4
+        -mthumb
+        -mfpu=fpv4-sp-d16
+        -mfloat-abi=hard
+        -specs=nano.specs
+        -specs=nosys.specs # added to fix _sbrk not found issue
+        -lc
+        -lm
+        -lnosys
+        -Wl,-Map=${PROJECT_NAME}.map,--cref
+        -Wl,--gc-sections
+        )
+
+# Print executable size
+add_custom_command(TARGET ${EXECUTABLE}
+        POST_BUILD
+        COMMAND arm-none-eabi-size ${EXECUTABLE})
+
+# Create hex file
+add_custom_command(TARGET ${EXECUTABLE}
+        POST_BUILD
+        COMMAND arm-none-eabi-objcopy -O ihex ${EXECUTABLE} ${PROJECT_NAME}.hex
+        COMMAND arm-none-eabi-objcopy -O binary ${EXECUTABLE} ${PROJECT_NAME}.bin)
+
+# Improve clean target
+set_target_properties(${EXECUTABLE} PROPERTIES ADDITIONAL_CLEAN_FILES
+        "${PROJECT_NAME}.bin;${PROJECT_NAME}.hex;${PROJECT_NAME}.map")

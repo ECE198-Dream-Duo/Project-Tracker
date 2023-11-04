@@ -1,46 +1,39 @@
-FROM ubuntu:20.04
+# Use a base image that includes the arm-none-eabi-gcc toolchain and CMake
+FROM debian:buster-slim
 
-ENV DEBIAN_FRONTEND=noninteractive
+# Install build essentials and other dependencies
+RUN apt-get update && apt-get install -y && apt-get clean \
+    build-essential \
+    cmake \
+    make \
+    gcc-arm-none-eabi \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install necessary packages
-RUN apt-get update && \
-         apt-get clean && \ 
-         apt-get install -y \
-          gcc-arm-none-eabi \
-          libcurl4-openssl-dev \ 
-          cmake \
-          make \
-          git \
-          && rm -rf /var/lib/apt/lists/*
+# Install Other Libraries
+RUN apt-get update && apt-get install -y ccache && rm -rf /var/lib/apt/lists/*
 
-# Create a directory for your workspace
-WORKDIR /workspace
+# Create a non-root user (optional but recommended)
+RUN useradd -ms /bin/bash developer
+USER developer
+WORKDIR /home/developer
 
-# Download the STM32 toolchain file and copy it to the /workspace directory
-RUN wget -O stm32_toolchain.cmake https://example.com/path/to/stm32_toolchain.cmake
+# Copy your project files into the Docker image
+COPY --chown=developer:developer . /home/developer/LineTrackingRobot
 
-# Install Other libraries (if Needed)
+# Create and move to the build directory
+WORKDIR /home/developer/LineTrackingRobot/build
 
+# Run CMake to configure the project. Adjust the command if you have a custom toolchain file.
+RUN chmod +x build.sh
 
-# Copy your C++ application source code and CMakeLists.txt
-# into the container (adjust the paths accordingly)
-COPY CMakeLists.txt .
-COPY src/ /workspace/src/
-COPY include/ /workspace/include/
+# The default command could be to run the tests or simply output the build files
+CMD ["ls", "/home/developer/LineTrackingRobot/build"]
 
-# Build your C++ application using CMake and the cross-compiler
-RUN mkdir build && cd build && \
-    cmake .. -DCMAKE_TOOLCHAIN_FILE=/workspace/stm32_toolchain.cmake && \
-    make
+# To Build:
+# cmake -G "MinGW Makefiles" -DCMAKE_TOOLCHAIN_FILE=../arm-none-eabi-gcc.cmake -DCMAKE_BUILD_TYPE=Debug ..
+# cmake -G "MinGW Makefiles" -DCMAKE_TOOLCHAIN_FILE=../arm-none-eabi-gcc.cmake -DCMAKE_BUILD_TYPE=Release ..
+# cmake --build . -- -j 4
 
-# Set the entry point to run your application (adjust as needed)
-CMD ["/workspace/build/LineTrackingRobot"]
-
-# Bulding Image: docker build -t stm32-dev-environment .
-# Run Container: docker run -it --privileged --rm stm32-dev-environment
-
-# Run Code inside Container: cd /workspace
-# mkdir build
-# cd build
-# cmake .. -DCMAKE_TOOLCHAIN_FILE=/path/to/stm32_toolchain.cmake
-# make
+# To Clean:
+# cmake --build . --target clean
