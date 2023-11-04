@@ -62,6 +62,10 @@ To replicate the development envrionment or simply to just upload the program on
 To Build and Compile:
 1. Run the .sh file as an executable
 
+For Development:
+1. Place all new files into the CPP Folder
+2. App.c is the Entry File (File that contains int main())
+
 <!-- USAGE EXAMPLES -->
 ## Usage
 
