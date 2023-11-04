@@ -90,7 +90,7 @@ target_include_directories(${EXECUTABLE} SYSTEM PRIVATE # adding system will als
 )
 
 target_include_directories(${EXECUTABLE} PRIVATE
-        source
+        CPP
 )
 
 target_compile_options(${EXECUTABLE} PRIVATE
