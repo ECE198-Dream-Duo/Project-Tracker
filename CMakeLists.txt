@@ -2,19 +2,10 @@ cmake_minimum_required(VERSION 3.15.3)
 
 project(LineTrackingRobot)
 
-#enable_language(C ASM)
-#set(CMAKE_C_STANDARD 99)
-#set(CMAKE_C_STANDARD_REQUIRED ON)
-#set(CMAKE_C_EXTENSIONS OFF)
-
 enable_language(CXX C ASM)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_program(CCACHE_PROGRAM ccache)
 
@@ -74,7 +65,7 @@ set(EXECUTABLE ${PROJECT_NAME}.out)
 add_executable(${EXECUTABLE} ${STM32CUBEMX_GENERATED_FILES}
         Core/Inc/retarget.h
         Core/Src/retarget.c
-        source/application.cpp
+        Src/App.c
 )
 
 target_compile_definitions(${EXECUTABLE} PRIVATE
@@ -90,7 +81,7 @@ target_include_directories(${EXECUTABLE} SYSTEM PRIVATE # adding system will als
 )
 
 target_include_directories(${EXECUTABLE} PRIVATE
-        CPP
+        CPP/inc
 )
 
 target_compile_options(${EXECUTABLE} PRIVATE
@@ -108,7 +99,7 @@ target_compile_options(${EXECUTABLE} PRIVATE
 
         #-fno-exceptions # C++ specific flag
         #-fno-rtti # C++ specific flag
-        $<$<COMPILE_LANGUAGE:CXX>:@${CMAKE_SOURCE_DIR}/gcc-options-cxx.txt> # add C++ options (including the two above)
+        #$<$<COMPILE_LANGUAGE:CXX>:@${CMAKE_SOURCE_DIR}/gcc-options-cxx.txt> # add C++ options (including the two above)
 
         $<$<CONFIG:Debug>:-Og> #  If CONFIG is Debug, then add option -Og, otherwise add nothing
         )

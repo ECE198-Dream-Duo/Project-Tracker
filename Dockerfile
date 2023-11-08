@@ -2,12 +2,14 @@
 FROM debian:buster-slim
 
 # Install build essentials and other dependencies
-RUN apt-get update && apt-get install -y && apt-get clean \
+RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
     make \
+    gcc \
     gcc-arm-none-eabi \
     git \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Other Libraries
@@ -25,7 +27,7 @@ COPY --chown=developer:developer . /home/developer/LineTrackingRobot
 WORKDIR /home/developer/LineTrackingRobot/build
 
 # Run CMake to configure the project. Adjust the command if you have a custom toolchain file.
-RUN chmod +x build.sh
+RUN chmod +x ../build.sh
 
 # The default command could be to run the tests or simply output the build files
 CMD ["ls", "/home/developer/LineTrackingRobot/build"]
