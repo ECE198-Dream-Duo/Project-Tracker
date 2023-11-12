@@ -1,0 +1,79 @@
+[
+{
+  "directory": "/workspaces/Project/build/Release",
+  "command": "/usr/bin/arm-none-eabi-gcc -fdata-sections -ffunction-sections --specs=nano.specs -Wl,--gc-sections -DDATA_CACHE_ENABLE=1 -DDEBUG -DEXTERNAL_CLOCK_VALUE=12288000 -DHSE_STARTUP_TIMEOUT=100 -DHSE_VALUE=8000000 -DHSI_VALUE=16000000 -DINSTRUCTION_CACHE_ENABLE=1 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DLSI_VALUE=32000 -DPREFETCH_ENABLE=1 -DSTM32F401xE -DSTM32_THREAD_SAFE_STRATEGY=4 -DUSE_FULL_LL_DRIVER -DVDD_VALUE=3300 -I../../Core/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc -I../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../../Drivers/CMSIS/Include -I../../Core/ThreadSafe -I../../CPP/inc  -O3 -DNDEBUG   -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Og -g3 -ggdb -std=gnu11 -o CMakeFiles/MedicineBot.dir/Core/Src/main.c.obj   -c /workspaces/Project/Core/Src/main.c",
+  "file": "/workspaces/Project/Core/Src/main.c"
+},
+
+{
+  "directory": "/workspaces/Project/build/Release",
+  "command": "/usr/bin/arm-none-eabi-gcc -fdata-sections -ffunction-sections --specs=nano.specs -Wl,--gc-sections -DDATA_CACHE_ENABLE=1 -DDEBUG -DEXTERNAL_CLOCK_VALUE=12288000 -DHSE_STARTUP_TIMEOUT=100 -DHSE_VALUE=8000000 -DHSI_VALUE=16000000 -DINSTRUCTION_CACHE_ENABLE=1 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DLSI_VALUE=32000 -DPREFETCH_ENABLE=1 -DSTM32F401xE -DSTM32_THREAD_SAFE_STRATEGY=4 -DUSE_FULL_LL_DRIVER -DVDD_VALUE=3300 -I../../Core/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc -I../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../../Drivers/CMSIS/Include -I../../Core/ThreadSafe -I../../CPP/inc  -O3 -DNDEBUG   -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Og -g3 -ggdb -std=gnu11 -o CMakeFiles/MedicineBot.dir/Core/Src/stm32f4xx_it.c.obj   -c /workspaces/Project/Core/Src/stm32f4xx_it.c",
+  "file": "/workspaces/Project/Core/Src/stm32f4xx_it.c"
+},
+
+{
+  "directory": "/workspaces/Project/build/Release",
+  "command": "/usr/bin/arm-none-eabi-gcc -fdata-sections -ffunction-sections --specs=nano.specs -Wl,--gc-sections -DDATA_CACHE_ENABLE=1 -DDEBUG -DEXTERNAL_CLOCK_VALUE=12288000 -DHSE_STARTUP_TIMEOUT=100 -DHSE_VALUE=8000000 -DHSI_VALUE=16000000 -DINSTRUCTION_CACHE_ENABLE=1 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DLSI_VALUE=32000 -DPREFETCH_ENABLE=1 -DSTM32F401xE -DSTM32_THREAD_SAFE_STRATEGY=4 -DUSE_FULL_LL_DRIVER -DVDD_VALUE=3300 -I../../Core/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc -I../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../../Drivers/CMSIS/Include -I../../Core/ThreadSafe -I../../CPP/inc  -O3 -DNDEBUG   -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Og -g3 -ggdb -std=gnu11 -o CMakeFiles/MedicineBot.dir/Core/Src/syscalls.c.obj   -c /workspaces/Project/Core/Src/syscalls.c",
+  "file": "/workspaces/Project/Core/Src/syscalls.c"
+},
+
+{
+  "directory": "/workspaces/Project/build/Release",
+  "command": "/usr/bin/arm-none-eabi-gcc -fdata-sections -ffunction-sections --specs=nano.specs -Wl,--gc-sections -DDATA_CACHE_ENABLE=1 -DDEBUG -DEXTERNAL_CLOCK_VALUE=12288000 -DHSE_STARTUP_TIMEOUT=100 -DHSE_VALUE=8000000 -DHSI_VALUE=16000000 -DINSTRUCTION_CACHE_ENABLE=1 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DLSI_VALUE=32000 -DPREFETCH_ENABLE=1 -DSTM32F401xE -DSTM32_THREAD_SAFE_STRATEGY=4 -DUSE_FULL_LL_DRIVER -DVDD_VALUE=3300 -I../../Core/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc -I../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../../Drivers/CMSIS/Include -I../../Core/ThreadSafe -I../../CPP/inc  -O3 -DNDEBUG   -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Og -g3 -ggdb -std=gnu11 -o CMakeFiles/MedicineBot.dir/Core/Src/sysmem.c.obj   -c /workspaces/Project/Core/Src/sysmem.c",
+  "file": "/workspaces/Project/Core/Src/sysmem.c"
+},
+
+{
+  "directory": "/workspaces/Project/build/Release",
+  "command": "/usr/bin/arm-none-eabi-gcc -fdata-sections -ffunction-sections --specs=nano.specs -Wl,--gc-sections -DDATA_CACHE_ENABLE=1 -DDEBUG -DEXTERNAL_CLOCK_VALUE=12288000 -DHSE_STARTUP_TIMEOUT=100 -DHSE_VALUE=8000000 -DHSI_VALUE=16000000 -DINSTRUCTION_CACHE_ENABLE=1 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DLSI_VALUE=32000 -DPREFETCH_ENABLE=1 -DSTM32F401xE -DSTM32_THREAD_SAFE_STRATEGY=4 -DUSE_FULL_LL_DRIVER -DVDD_VALUE=3300 -I../../Core/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc -I../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../../Drivers/CMSIS/Include -I../../Core/ThreadSafe -I../../CPP/inc  -O3 -DNDEBUG   -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Og -g3 -ggdb -std=gnu11 -o CMakeFiles/MedicineBot.dir/Core/Src/system_stm32f4xx.c.obj   -c /workspaces/Project/Core/Src/system_stm32f4xx.c",
+  "file": "/workspaces/Project/Core/Src/system_stm32f4xx.c"
+},
+
+{
+  "directory": "/workspaces/Project/build/Release",
+  "command": "/usr/bin/arm-none-eabi-gcc -fdata-sections -ffunction-sections --specs=nano.specs -Wl,--gc-sections -DDATA_CACHE_ENABLE=1 -DDEBUG -DEXTERNAL_CLOCK_VALUE=12288000 -DHSE_STARTUP_TIMEOUT=100 -DHSE_VALUE=8000000 -DHSI_VALUE=16000000 -DINSTRUCTION_CACHE_ENABLE=1 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DLSI_VALUE=32000 -DPREFETCH_ENABLE=1 -DSTM32F401xE -DSTM32_THREAD_SAFE_STRATEGY=4 -DUSE_FULL_LL_DRIVER -DVDD_VALUE=3300 -I../../Core/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc -I../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../../Drivers/CMSIS/Include -I../../Core/ThreadSafe -I../../CPP/inc  -O3 -DNDEBUG   -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Og -g3 -ggdb -o CMakeFiles/MedicineBot.dir/Core/Startup/startup_stm32f401retx.s.obj -c /workspaces/Project/Core/Startup/startup_stm32f401retx.s",
+  "file": "/workspaces/Project/Core/Startup/startup_stm32f401retx.s"
+},
+
+{
+  "directory": "/workspaces/Project/build/Release",
+  "command": "/usr/bin/arm-none-eabi-gcc -fdata-sections -ffunction-sections --specs=nano.specs -Wl,--gc-sections -DDATA_CACHE_ENABLE=1 -DDEBUG -DEXTERNAL_CLOCK_VALUE=12288000 -DHSE_STARTUP_TIMEOUT=100 -DHSE_VALUE=8000000 -DHSI_VALUE=16000000 -DINSTRUCTION_CACHE_ENABLE=1 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DLSI_VALUE=32000 -DPREFETCH_ENABLE=1 -DSTM32F401xE -DSTM32_THREAD_SAFE_STRATEGY=4 -DUSE_FULL_LL_DRIVER -DVDD_VALUE=3300 -I../../Core/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc -I../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../../Drivers/CMSIS/Include -I../../Core/ThreadSafe -I../../CPP/inc  -O3 -DNDEBUG   -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Og -g3 -ggdb -std=gnu11 -o CMakeFiles/MedicineBot.dir/Core/ThreadSafe/newlib_lock_glue.c.obj   -c /workspaces/Project/Core/ThreadSafe/newlib_lock_glue.c",
+  "file": "/workspaces/Project/Core/ThreadSafe/newlib_lock_glue.c"
+},
+
+{
+  "directory": "/workspaces/Project/build/Release",
+  "command": "/usr/bin/arm-none-eabi-gcc -fdata-sections -ffunction-sections --specs=nano.specs -Wl,--gc-sections -DDATA_CACHE_ENABLE=1 -DDEBUG -DEXTERNAL_CLOCK_VALUE=12288000 -DHSE_STARTUP_TIMEOUT=100 -DHSE_VALUE=8000000 -DHSI_VALUE=16000000 -DINSTRUCTION_CACHE_ENABLE=1 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DLSI_VALUE=32000 -DPREFETCH_ENABLE=1 -DSTM32F401xE -DSTM32_THREAD_SAFE_STRATEGY=4 -DUSE_FULL_LL_DRIVER -DVDD_VALUE=3300 -I../../Core/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc -I../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../../Drivers/CMSIS/Include -I../../Core/ThreadSafe -I../../CPP/inc  -O3 -DNDEBUG   -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Og -g3 -ggdb -std=gnu11 -o CMakeFiles/MedicineBot.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_dma.c.obj   -c /workspaces/Project/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_dma.c",
+  "file": "/workspaces/Project/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_dma.c"
+},
+
+{
+  "directory": "/workspaces/Project/build/Release",
+  "command": "/usr/bin/arm-none-eabi-gcc -fdata-sections -ffunction-sections --specs=nano.specs -Wl,--gc-sections -DDATA_CACHE_ENABLE=1 -DDEBUG -DEXTERNAL_CLOCK_VALUE=12288000 -DHSE_STARTUP_TIMEOUT=100 -DHSE_VALUE=8000000 -DHSI_VALUE=16000000 -DINSTRUCTION_CACHE_ENABLE=1 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DLSI_VALUE=32000 -DPREFETCH_ENABLE=1 -DSTM32F401xE -DSTM32_THREAD_SAFE_STRATEGY=4 -DUSE_FULL_LL_DRIVER -DVDD_VALUE=3300 -I../../Core/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc -I../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../../Drivers/CMSIS/Include -I../../Core/ThreadSafe -I../../CPP/inc  -O3 -DNDEBUG   -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Og -g3 -ggdb -std=gnu11 -o CMakeFiles/MedicineBot.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_exti.c.obj   -c /workspaces/Project/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_exti.c",
+  "file": "/workspaces/Project/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_exti.c"
+},
+
+{
+  "directory": "/workspaces/Project/build/Release",
+  "command": "/usr/bin/arm-none-eabi-gcc -fdata-sections -ffunction-sections --specs=nano.specs -Wl,--gc-sections -DDATA_CACHE_ENABLE=1 -DDEBUG -DEXTERNAL_CLOCK_VALUE=12288000 -DHSE_STARTUP_TIMEOUT=100 -DHSE_VALUE=8000000 -DHSI_VALUE=16000000 -DINSTRUCTION_CACHE_ENABLE=1 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DLSI_VALUE=32000 -DPREFETCH_ENABLE=1 -DSTM32F401xE -DSTM32_THREAD_SAFE_STRATEGY=4 -DUSE_FULL_LL_DRIVER -DVDD_VALUE=3300 -I../../Core/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc -I../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../../Drivers/CMSIS/Include -I../../Core/ThreadSafe -I../../CPP/inc  -O3 -DNDEBUG   -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Og -g3 -ggdb -std=gnu11 -o CMakeFiles/MedicineBot.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_gpio.c.obj   -c /workspaces/Project/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_gpio.c",
+  "file": "/workspaces/Project/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_gpio.c"
+},
+
+{
+  "directory": "/workspaces/Project/build/Release",
+  "command": "/usr/bin/arm-none-eabi-gcc -fdata-sections -ffunction-sections --specs=nano.specs -Wl,--gc-sections -DDATA_CACHE_ENABLE=1 -DDEBUG -DEXTERNAL_CLOCK_VALUE=12288000 -DHSE_STARTUP_TIMEOUT=100 -DHSE_VALUE=8000000 -DHSI_VALUE=16000000 -DINSTRUCTION_CACHE_ENABLE=1 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DLSI_VALUE=32000 -DPREFETCH_ENABLE=1 -DSTM32F401xE -DSTM32_THREAD_SAFE_STRATEGY=4 -DUSE_FULL_LL_DRIVER -DVDD_VALUE=3300 -I../../Core/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc -I../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../../Drivers/CMSIS/Include -I../../Core/ThreadSafe -I../../CPP/inc  -O3 -DNDEBUG   -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Og -g3 -ggdb -std=gnu11 -o CMakeFiles/MedicineBot.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_rcc.c.obj   -c /workspaces/Project/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_rcc.c",
+  "file": "/workspaces/Project/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_rcc.c"
+},
+
+{
+  "directory": "/workspaces/Project/build/Release",
+  "command": "/usr/bin/arm-none-eabi-gcc -fdata-sections -ffunction-sections --specs=nano.specs -Wl,--gc-sections -DDATA_CACHE_ENABLE=1 -DDEBUG -DEXTERNAL_CLOCK_VALUE=12288000 -DHSE_STARTUP_TIMEOUT=100 -DHSE_VALUE=8000000 -DHSI_VALUE=16000000 -DINSTRUCTION_CACHE_ENABLE=1 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DLSI_VALUE=32000 -DPREFETCH_ENABLE=1 -DSTM32F401xE -DSTM32_THREAD_SAFE_STRATEGY=4 -DUSE_FULL_LL_DRIVER -DVDD_VALUE=3300 -I../../Core/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc -I../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../../Drivers/CMSIS/Include -I../../Core/ThreadSafe -I../../CPP/inc  -O3 -DNDEBUG   -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Og -g3 -ggdb -std=gnu11 -o CMakeFiles/MedicineBot.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usart.c.obj   -c /workspaces/Project/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usart.c",
+  "file": "/workspaces/Project/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usart.c"
+},
+
+{
+  "directory": "/workspaces/Project/build/Release",
+  "command": "/usr/bin/arm-none-eabi-gcc -fdata-sections -ffunction-sections --specs=nano.specs -Wl,--gc-sections -DDATA_CACHE_ENABLE=1 -DDEBUG -DEXTERNAL_CLOCK_VALUE=12288000 -DHSE_STARTUP_TIMEOUT=100 -DHSE_VALUE=8000000 -DHSI_VALUE=16000000 -DINSTRUCTION_CACHE_ENABLE=1 -DLSE_STARTUP_TIMEOUT=5000 -DLSE_VALUE=32768 -DLSI_VALUE=32000 -DPREFETCH_ENABLE=1 -DSTM32F401xE -DSTM32_THREAD_SAFE_STRATEGY=4 -DUSE_FULL_LL_DRIVER -DVDD_VALUE=3300 -I../../Core/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc -I../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../../Drivers/CMSIS/Include -I../../Core/ThreadSafe -I../../CPP/inc  -O3 -DNDEBUG   -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Og -g3 -ggdb -std=gnu11 -o CMakeFiles/MedicineBot.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_utils.c.obj   -c /workspaces/Project/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_utils.c",
+  "file": "/workspaces/Project/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_utils.c"
+}
+]

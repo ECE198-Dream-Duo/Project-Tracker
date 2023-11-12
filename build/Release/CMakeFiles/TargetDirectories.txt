@@ -1,0 +1,3 @@
+/workspaces/Project/build/Release/CMakeFiles/rebuild_cache.dir
+/workspaces/Project/build/Release/CMakeFiles/edit_cache.dir
+/workspaces/Project/build/Release/CMakeFiles/MedicineBot.dir

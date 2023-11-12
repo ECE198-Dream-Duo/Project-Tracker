@@ -1,0 +1,14 @@
+# ninja log v5
+72	134	1699830039689232500	CMakeFiles/MedicineBot.dir/Core/Startup/startup_stm32f401retx.s.obj	33aa9b7c9b0cca74
+68	338	1699830039897252800	CMakeFiles/MedicineBot.dir/Core/Src/sysmem.c.obj	3da2b0c530313acb
+71	396	1699830039955792100	CMakeFiles/MedicineBot.dir/Core/Src/system_stm32f4xx.c.obj	aec714c3d97c878c
+78	409	1699830039961793100	CMakeFiles/MedicineBot.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_exti.c.obj	55c952ad49dc6d0c
+81	430	1699830039991112400	CMakeFiles/MedicineBot.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_gpio.c.obj	c4acd85cff7c5afb
+88	453	1699830040012997200	CMakeFiles/MedicineBot.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usart.c.obj	c1e07f4aa2ae9d68
+85	466	1699830040026889700	CMakeFiles/MedicineBot.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_rcc.c.obj	318dc35691de1424
+63	473	1699830040029888600	CMakeFiles/MedicineBot.dir/Core/Src/stm32f4xx_it.c.obj	715173e135d695e2
+60	483	1699830040042888000	CMakeFiles/MedicineBot.dir/Core/Src/main.c.obj	7a680206962e9d91
+75	494	1699830040044891400	CMakeFiles/MedicineBot.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_dma.c.obj	875250439d7e4e19
+90	505	1699830040047889500	CMakeFiles/MedicineBot.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_utils.c.obj	f3c78fc575e7745c
+66	664	1699830040222914700	CMakeFiles/MedicineBot.dir/Core/Src/syscalls.c.obj	7ad7684a1aeca9ad
+110	579	1699830988852269300	CMakeFiles/MedicineBot.dir/Core/Src/stm32f4xx_it.c.obj	715173e135d695e2
