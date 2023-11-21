@@ -1,0 +1,1270 @@
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"mpu6050.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/mpu6050.c"
+  20              		.section	.text.mpu6050Init,"ax",%progbits
+  21              		.align	1
+  22              		.global	mpu6050Init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	mpu6050Init:
+  28              	.LVL0:
+  29              	.LFB130:
+   1:Core/Src/mpu6050.c **** #include "mpu6050.h"
+   2:Core/Src/mpu6050.c **** 
+   3:Core/Src/mpu6050.c **** #define RAD_TO_DEG 57.295779513082320876798154814105
+   4:Core/Src/mpu6050.c **** 
+   5:Core/Src/mpu6050.c **** #define MPU6050_ADDR 0X68 << 1
+   6:Core/Src/mpu6050.c **** #define MPU6050_WHO_AM_I 0x75
+   7:Core/Src/mpu6050.c **** #define MPU6050_PWR_MGMT_REG 0x6B
+   8:Core/Src/mpu6050.c **** #define MPU6050_SMPLPT_DIV_REG 0x19
+   9:Core/Src/mpu6050.c **** #define MPU6050_ACCEL_CONFIG_REG 0x1C
+  10:Core/Src/mpu6050.c **** #define MPU6050_GYRO_CONFIG_REG 0x1B
+  11:Core/Src/mpu6050.c **** #define MPU6050_ACCEL_MEASR_REG 0x3B
+  12:Core/Src/mpu6050.c **** #define MPU6050_GYRO_MEASR_REG 0x43
+  13:Core/Src/mpu6050.c **** #define MPU6050_TEMP_MEASR_REG 0x41
+  14:Core/Src/mpu6050.c **** #define HAL_TIMEOUT 100
+  15:Core/Src/mpu6050.c **** #define INTEGRAL_CAP_STRAIGHT_LINE 15
+  16:Core/Src/mpu6050.c **** 
+  17:Core/Src/mpu6050.c **** #define ERROR_
+  18:Core/Src/mpu6050.c **** double timer = 0;
+  19:Core/Src/mpu6050.c **** 
+  20:Core/Src/mpu6050.c **** int mpu6050Init(I2C_HandleTypeDef *hi2c) {
+  30              		.loc 1 20 42 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 8
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 20 42 is_stmt 0 view .LVU1
+  35 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 24
+  38              		.cfi_offset 4, -24
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 2
+
+
+  39              		.cfi_offset 5, -20
+  40              		.cfi_offset 6, -16
+  41              		.cfi_offset 7, -12
+  42              		.cfi_offset 8, -8
+  43              		.cfi_offset 14, -4
+  44 0004 86B0     		sub	sp, sp, #24
+  45              	.LCFI1:
+  46              		.cfi_def_cfa_offset 48
+  47 0006 0546     		mov	r5, r0
+  21:Core/Src/mpu6050.c ****     uint8_t check;
+  48              		.loc 1 21 5 is_stmt 1 view .LVU2
+  22:Core/Src/mpu6050.c ****     uint8_t data;
+  49              		.loc 1 22 5 view .LVU3
+  23:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Read(hi2c, MPU6050_ADDR, MPU6050_WHO_AM_I, 1, &check, 1, HAL_TIMEOUT);
+  50              		.loc 1 23 5 view .LVU4
+  51 0008 6423     		movs	r3, #100
+  52 000a 0293     		str	r3, [sp, #8]
+  53 000c 0123     		movs	r3, #1
+  54 000e 0193     		str	r3, [sp, #4]
+  55 0010 0DF11702 		add	r2, sp, #23
+  56 0014 0092     		str	r2, [sp]
+  57 0016 7522     		movs	r2, #117
+  58 0018 D021     		movs	r1, #208
+  59 001a FFF7FEFF 		bl	HAL_I2C_Mem_Read
+  60              	.LVL1:
+  24:Core/Src/mpu6050.c ****     if (check != 0x68) {
+  61              		.loc 1 24 5 view .LVU5
+  62              		.loc 1 24 15 is_stmt 0 view .LVU6
+  63 001e 9DF81730 		ldrb	r3, [sp, #23]	@ zero_extendqisi2
+  64              		.loc 1 24 8 view .LVU7
+  65 0022 682B     		cmp	r3, #104
+  66 0024 03D0     		beq	.L5
+  25:Core/Src/mpu6050.c ****         return 0;
+  67              		.loc 1 25 16 view .LVU8
+  68 0026 0020     		movs	r0, #0
+  69              	.L1:
+  26:Core/Src/mpu6050.c ****     }
+  27:Core/Src/mpu6050.c ****     // wake up mpu6050 by clearing all bits in 0x6B register
+  28:Core/Src/mpu6050.c ****     data = 0;
+  29:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Write(hi2c, MPU6050_ADDR, MPU6050_PWR_MGMT_REG, 1, &data, 1, HAL_TIMEOUT);
+  30:Core/Src/mpu6050.c **** 
+  31:Core/Src/mpu6050.c ****     // configer data sample rate to 1khz
+  32:Core/Src/mpu6050.c ****     data = 0x07;
+  33:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Write(hi2c, MPU6050_ADDR, MPU6050_SMPLPT_DIV_REG, 1, &data, 1, HAL_TIMEOUT);
+  34:Core/Src/mpu6050.c **** 
+  35:Core/Src/mpu6050.c ****     // Set accelerometer config to +- 2g
+  36:Core/Src/mpu6050.c ****     data = 0x00;
+  37:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Write(hi2c, MPU6050_ADDR, MPU6050_ACCEL_CONFIG_REG, 1, &data, 1, HAL_TIMEOUT);
+  38:Core/Src/mpu6050.c **** 
+  39:Core/Src/mpu6050.c ****     // Set gyroscope config to +- 250dps
+  40:Core/Src/mpu6050.c ****     data = 0x00;
+  41:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Write(hi2c, MPU6050_ADDR, MPU6050_GYRO_CONFIG_REG, 1, &data, 1, HAL_TIMEOUT);
+  42:Core/Src/mpu6050.c ****     return 1;
+  43:Core/Src/mpu6050.c **** }
+  70              		.loc 1 43 1 view .LVU9
+  71 0028 06B0     		add	sp, sp, #24
+  72              	.LCFI2:
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 3
+
+
+  73              		.cfi_remember_state
+  74              		.cfi_def_cfa_offset 24
+  75              		@ sp needed
+  76 002a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+  77              	.LVL2:
+  78              	.L5:
+  79              	.LCFI3:
+  80              		.cfi_restore_state
+  28:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Write(hi2c, MPU6050_ADDR, MPU6050_PWR_MGMT_REG, 1, &data, 1, HAL_TIMEOUT);
+  81              		.loc 1 28 5 is_stmt 1 view .LVU10
+  28:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Write(hi2c, MPU6050_ADDR, MPU6050_PWR_MGMT_REG, 1, &data, 1, HAL_TIMEOUT);
+  82              		.loc 1 28 10 is_stmt 0 view .LVU11
+  83 002e 4FF00008 		mov	r8, #0
+  84 0032 8DF81680 		strb	r8, [sp, #22]
+  29:Core/Src/mpu6050.c **** 
+  85              		.loc 1 29 5 is_stmt 1 view .LVU12
+  86 0036 6427     		movs	r7, #100
+  87 0038 0297     		str	r7, [sp, #8]
+  88 003a 0124     		movs	r4, #1
+  89 003c 0194     		str	r4, [sp, #4]
+  90 003e 0DF11606 		add	r6, sp, #22
+  91 0042 0096     		str	r6, [sp]
+  92 0044 2346     		mov	r3, r4
+  93 0046 6B22     		movs	r2, #107
+  94 0048 D021     		movs	r1, #208
+  95 004a 2846     		mov	r0, r5
+  96 004c FFF7FEFF 		bl	HAL_I2C_Mem_Write
+  97              	.LVL3:
+  32:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Write(hi2c, MPU6050_ADDR, MPU6050_SMPLPT_DIV_REG, 1, &data, 1, HAL_TIMEOUT);
+  98              		.loc 1 32 5 view .LVU13
+  32:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Write(hi2c, MPU6050_ADDR, MPU6050_SMPLPT_DIV_REG, 1, &data, 1, HAL_TIMEOUT);
+  99              		.loc 1 32 10 is_stmt 0 view .LVU14
+ 100 0050 0723     		movs	r3, #7
+ 101 0052 8DF81630 		strb	r3, [sp, #22]
+  33:Core/Src/mpu6050.c **** 
+ 102              		.loc 1 33 5 is_stmt 1 view .LVU15
+ 103 0056 0297     		str	r7, [sp, #8]
+ 104 0058 0194     		str	r4, [sp, #4]
+ 105 005a 0096     		str	r6, [sp]
+ 106 005c 2346     		mov	r3, r4
+ 107 005e 1922     		movs	r2, #25
+ 108 0060 D021     		movs	r1, #208
+ 109 0062 2846     		mov	r0, r5
+ 110 0064 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 111              	.LVL4:
+  36:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Write(hi2c, MPU6050_ADDR, MPU6050_ACCEL_CONFIG_REG, 1, &data, 1, HAL_TIMEOUT);
+ 112              		.loc 1 36 5 view .LVU16
+  36:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Write(hi2c, MPU6050_ADDR, MPU6050_ACCEL_CONFIG_REG, 1, &data, 1, HAL_TIMEOUT);
+ 113              		.loc 1 36 10 is_stmt 0 view .LVU17
+ 114 0068 8DF81680 		strb	r8, [sp, #22]
+  37:Core/Src/mpu6050.c **** 
+ 115              		.loc 1 37 5 is_stmt 1 view .LVU18
+ 116 006c 0297     		str	r7, [sp, #8]
+ 117 006e 0194     		str	r4, [sp, #4]
+ 118 0070 0096     		str	r6, [sp]
+ 119 0072 2346     		mov	r3, r4
+ 120 0074 1C22     		movs	r2, #28
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 4
+
+
+ 121 0076 D021     		movs	r1, #208
+ 122 0078 2846     		mov	r0, r5
+ 123 007a FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 124              	.LVL5:
+  40:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Write(hi2c, MPU6050_ADDR, MPU6050_GYRO_CONFIG_REG, 1, &data, 1, HAL_TIMEOUT);
+ 125              		.loc 1 40 5 view .LVU19
+  40:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Write(hi2c, MPU6050_ADDR, MPU6050_GYRO_CONFIG_REG, 1, &data, 1, HAL_TIMEOUT);
+ 126              		.loc 1 40 10 is_stmt 0 view .LVU20
+ 127 007e 8DF81680 		strb	r8, [sp, #22]
+  41:Core/Src/mpu6050.c ****     return 1;
+ 128              		.loc 1 41 5 is_stmt 1 view .LVU21
+ 129 0082 0297     		str	r7, [sp, #8]
+ 130 0084 0194     		str	r4, [sp, #4]
+ 131 0086 0096     		str	r6, [sp]
+ 132 0088 2346     		mov	r3, r4
+ 133 008a 1B22     		movs	r2, #27
+ 134 008c D021     		movs	r1, #208
+ 135 008e 2846     		mov	r0, r5
+ 136 0090 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 137              	.LVL6:
+  42:Core/Src/mpu6050.c **** }
+ 138              		.loc 1 42 5 view .LVU22
+  42:Core/Src/mpu6050.c **** }
+ 139              		.loc 1 42 12 is_stmt 0 view .LVU23
+ 140 0094 2046     		mov	r0, r4
+ 141 0096 C7E7     		b	.L1
+ 142              		.cfi_endproc
+ 143              	.LFE130:
+ 145              		.global	__aeabi_i2d
+ 146              		.global	__aeabi_dmul
+ 147              		.global	__aeabi_dsub
+ 148              		.section	.text.readAccelData,"ax",%progbits
+ 149              		.align	1
+ 150              		.global	readAccelData
+ 151              		.syntax unified
+ 152              		.thumb
+ 153              		.thumb_func
+ 155              	readAccelData:
+ 156              	.LVL7:
+ 157              	.LFB131:
+  44:Core/Src/mpu6050.c **** 
+  45:Core/Src/mpu6050.c **** void readAccelData(I2C_HandleTypeDef *hi2c, MPU6050* data) {
+ 158              		.loc 1 45 60 is_stmt 1 view -0
+ 159              		.cfi_startproc
+ 160              		@ args = 0, pretend = 0, frame = 8
+ 161              		@ frame_needed = 0, uses_anonymous_args = 0
+ 162              		.loc 1 45 60 is_stmt 0 view .LVU25
+ 163 0000 70B5     		push	{r4, r5, r6, lr}
+ 164              	.LCFI4:
+ 165              		.cfi_def_cfa_offset 16
+ 166              		.cfi_offset 4, -16
+ 167              		.cfi_offset 5, -12
+ 168              		.cfi_offset 6, -8
+ 169              		.cfi_offset 14, -4
+ 170 0002 86B0     		sub	sp, sp, #24
+ 171              	.LCFI5:
+ 172              		.cfi_def_cfa_offset 40
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 5
+
+
+ 173 0004 0C46     		mov	r4, r1
+  46:Core/Src/mpu6050.c ****     uint8_t rawData[6];
+ 174              		.loc 1 46 5 is_stmt 1 view .LVU26
+  47:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Read(hi2c, MPU6050_ADDR, MPU6050_ACCEL_MEASR_REG, 1, rawData, 6, HAL_TIMEOUT);
+ 175              		.loc 1 47 5 view .LVU27
+ 176 0006 6423     		movs	r3, #100
+ 177 0008 0293     		str	r3, [sp, #8]
+ 178 000a 0623     		movs	r3, #6
+ 179 000c 0193     		str	r3, [sp, #4]
+ 180 000e 04AB     		add	r3, sp, #16
+ 181 0010 0093     		str	r3, [sp]
+ 182 0012 0123     		movs	r3, #1
+ 183 0014 3B22     		movs	r2, #59
+ 184 0016 D021     		movs	r1, #208
+ 185              	.LVL8:
+ 186              		.loc 1 47 5 is_stmt 0 view .LVU28
+ 187 0018 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 188              	.LVL9:
+  48:Core/Src/mpu6050.c ****     data->accelX_RAW = (((int16_t)(rawData[0] << 8 | rawData[1])));
+ 189              		.loc 1 48 5 is_stmt 1 view .LVU29
+ 190              		.loc 1 48 43 is_stmt 0 view .LVU30
+ 191 001c 9DF81030 		ldrb	r3, [sp, #16]	@ zero_extendqisi2
+ 192              		.loc 1 48 61 view .LVU31
+ 193 0020 9DF81100 		ldrb	r0, [sp, #17]	@ zero_extendqisi2
+ 194              		.loc 1 48 26 view .LVU32
+ 195 0024 40EA0320 		orr	r0, r0, r3, lsl #8
+ 196 0028 00B2     		sxth	r0, r0
+ 197              		.loc 1 48 22 view .LVU33
+ 198 002a 2080     		strh	r0, [r4]	@ movhi
+  49:Core/Src/mpu6050.c ****     data->accelY_RAW = (((int16_t)(rawData[2] << 8 | rawData[3])));
+ 199              		.loc 1 49 5 is_stmt 1 view .LVU34
+ 200              		.loc 1 49 43 is_stmt 0 view .LVU35
+ 201 002c 9DF81230 		ldrb	r3, [sp, #18]	@ zero_extendqisi2
+ 202              		.loc 1 49 61 view .LVU36
+ 203 0030 9DF81360 		ldrb	r6, [sp, #19]	@ zero_extendqisi2
+ 204              		.loc 1 49 26 view .LVU37
+ 205 0034 46EA0326 		orr	r6, r6, r3, lsl #8
+ 206 0038 36B2     		sxth	r6, r6
+ 207              		.loc 1 49 22 view .LVU38
+ 208 003a 6680     		strh	r6, [r4, #2]	@ movhi
+  50:Core/Src/mpu6050.c ****     data->accelZ_RAW = (((int16_t)(rawData[4] << 8 | rawData[5])));
+ 209              		.loc 1 50 5 is_stmt 1 view .LVU39
+ 210              		.loc 1 50 43 is_stmt 0 view .LVU40
+ 211 003c 9DF81430 		ldrb	r3, [sp, #20]	@ zero_extendqisi2
+ 212              		.loc 1 50 61 view .LVU41
+ 213 0040 9DF81550 		ldrb	r5, [sp, #21]	@ zero_extendqisi2
+ 214              		.loc 1 50 26 view .LVU42
+ 215 0044 45EA0325 		orr	r5, r5, r3, lsl #8
+ 216 0048 2DB2     		sxth	r5, r5
+ 217              		.loc 1 50 22 view .LVU43
+ 218 004a A580     		strh	r5, [r4, #4]	@ movhi
+  51:Core/Src/mpu6050.c **** 
+  52:Core/Src/mpu6050.c ****     data->accelX = data->accelX_RAW / 16384.0 - 0.20849609375; 
+ 219              		.loc 1 52 5 is_stmt 1 view .LVU44
+ 220              		.loc 1 52 37 is_stmt 0 view .LVU45
+ 221 004c FFF7FEFF 		bl	__aeabi_i2d
+ 222              	.LVL10:
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 6
+
+
+ 223 0050 0022     		movs	r2, #0
+ 224 0052 124B     		ldr	r3, .L8
+ 225 0054 FFF7FEFF 		bl	__aeabi_dmul
+ 226              	.LVL11:
+ 227              		.loc 1 52 47 view .LVU46
+ 228 0058 0022     		movs	r2, #0
+ 229 005a 114B     		ldr	r3, .L8+4
+ 230 005c FFF7FEFF 		bl	__aeabi_dsub
+ 231              	.LVL12:
+ 232              		.loc 1 52 18 view .LVU47
+ 233 0060 C4E90201 		strd	r0, [r4, #8]
+  53:Core/Src/mpu6050.c ****     data->accelY = data->accelY_RAW / 16384.0 - 0.02587890625;
+ 234              		.loc 1 53 5 is_stmt 1 view .LVU48
+ 235              		.loc 1 53 37 is_stmt 0 view .LVU49
+ 236 0064 3046     		mov	r0, r6
+ 237 0066 FFF7FEFF 		bl	__aeabi_i2d
+ 238              	.LVL13:
+ 239 006a 0022     		movs	r2, #0
+ 240 006c 0B4B     		ldr	r3, .L8
+ 241 006e FFF7FEFF 		bl	__aeabi_dmul
+ 242              	.LVL14:
+ 243              		.loc 1 53 47 view .LVU50
+ 244 0072 0022     		movs	r2, #0
+ 245 0074 0B4B     		ldr	r3, .L8+8
+ 246 0076 FFF7FEFF 		bl	__aeabi_dsub
+ 247              	.LVL15:
+ 248              		.loc 1 53 18 view .LVU51
+ 249 007a C4E90401 		strd	r0, [r4, #16]
+  54:Core/Src/mpu6050.c ****     data->accelZ = data->accelZ_RAW / 16384.0 - 0.154541015625;
+ 250              		.loc 1 54 5 is_stmt 1 view .LVU52
+ 251              		.loc 1 54 37 is_stmt 0 view .LVU53
+ 252 007e 2846     		mov	r0, r5
+ 253 0080 FFF7FEFF 		bl	__aeabi_i2d
+ 254              	.LVL16:
+ 255 0084 0022     		movs	r2, #0
+ 256 0086 054B     		ldr	r3, .L8
+ 257 0088 FFF7FEFF 		bl	__aeabi_dmul
+ 258              	.LVL17:
+ 259              		.loc 1 54 47 view .LVU54
+ 260 008c 0022     		movs	r2, #0
+ 261 008e 064B     		ldr	r3, .L8+12
+ 262 0090 FFF7FEFF 		bl	__aeabi_dsub
+ 263              	.LVL18:
+ 264              		.loc 1 54 18 view .LVU55
+ 265 0094 C4E90601 		strd	r0, [r4, #24]
+  55:Core/Src/mpu6050.c **** 
+  56:Core/Src/mpu6050.c **** }
+ 266              		.loc 1 56 1 view .LVU56
+ 267 0098 06B0     		add	sp, sp, #24
+ 268              	.LCFI6:
+ 269              		.cfi_def_cfa_offset 16
+ 270              		@ sp needed
+ 271 009a 70BD     		pop	{r4, r5, r6, pc}
+ 272              	.LVL19:
+ 273              	.L9:
+ 274              		.loc 1 56 1 view .LVU57
+ 275              		.align	2
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 7
+
+
+ 276              	.L8:
+ 277 009c 0000103F 		.word	1058013184
+ 278 00a0 00B0CA3F 		.word	1070247936
+ 279 00a4 00809A3F 		.word	1067089920
+ 280 00a8 00C8C33F 		.word	1069795328
+ 281              		.cfi_endproc
+ 282              	.LFE131:
+ 284              		.global	__aeabi_ddiv
+ 285              		.global	__aeabi_dadd
+ 286              		.section	.text.readGyroData,"ax",%progbits
+ 287              		.align	1
+ 288              		.global	readGyroData
+ 289              		.syntax unified
+ 290              		.thumb
+ 291              		.thumb_func
+ 293              	readGyroData:
+ 294              	.LVL20:
+ 295              	.LFB132:
+  57:Core/Src/mpu6050.c **** 
+  58:Core/Src/mpu6050.c **** void readGyroData(I2C_HandleTypeDef *hi2c, MPU6050* data) {
+ 296              		.loc 1 58 59 is_stmt 1 view -0
+ 297              		.cfi_startproc
+ 298              		@ args = 0, pretend = 0, frame = 8
+ 299              		@ frame_needed = 0, uses_anonymous_args = 0
+ 300              		.loc 1 58 59 is_stmt 0 view .LVU59
+ 301 0000 70B5     		push	{r4, r5, r6, lr}
+ 302              	.LCFI7:
+ 303              		.cfi_def_cfa_offset 16
+ 304              		.cfi_offset 4, -16
+ 305              		.cfi_offset 5, -12
+ 306              		.cfi_offset 6, -8
+ 307              		.cfi_offset 14, -4
+ 308 0002 86B0     		sub	sp, sp, #24
+ 309              	.LCFI8:
+ 310              		.cfi_def_cfa_offset 40
+ 311 0004 0C46     		mov	r4, r1
+  59:Core/Src/mpu6050.c ****     uint8_t rawData[6];
+ 312              		.loc 1 59 5 is_stmt 1 view .LVU60
+  60:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Read(hi2c, MPU6050_ADDR, MPU6050_GYRO_MEASR_REG, 1, rawData, 6, HAL_TIMEOUT);
+ 313              		.loc 1 60 5 view .LVU61
+ 314 0006 6423     		movs	r3, #100
+ 315 0008 0293     		str	r3, [sp, #8]
+ 316 000a 0623     		movs	r3, #6
+ 317 000c 0193     		str	r3, [sp, #4]
+ 318 000e 04AB     		add	r3, sp, #16
+ 319 0010 0093     		str	r3, [sp]
+ 320 0012 0123     		movs	r3, #1
+ 321 0014 4322     		movs	r2, #67
+ 322 0016 D021     		movs	r1, #208
+ 323              	.LVL21:
+ 324              		.loc 1 60 5 is_stmt 0 view .LVU62
+ 325 0018 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 326              	.LVL22:
+  61:Core/Src/mpu6050.c ****     data->gyroX_RAW = (((int16_t)(rawData[0] << 8 | rawData[1])));
+ 327              		.loc 1 61 5 is_stmt 1 view .LVU63
+ 328              		.loc 1 61 42 is_stmt 0 view .LVU64
+ 329 001c 9DF81030 		ldrb	r3, [sp, #16]	@ zero_extendqisi2
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 8
+
+
+ 330              		.loc 1 61 60 view .LVU65
+ 331 0020 9DF81100 		ldrb	r0, [sp, #17]	@ zero_extendqisi2
+ 332              		.loc 1 61 25 view .LVU66
+ 333 0024 40EA0320 		orr	r0, r0, r3, lsl #8
+ 334 0028 00B2     		sxth	r0, r0
+ 335              		.loc 1 61 21 view .LVU67
+ 336 002a 2084     		strh	r0, [r4, #32]	@ movhi
+  62:Core/Src/mpu6050.c ****     data->gyroY_RAW = (((int16_t)(rawData[2] << 8 | rawData[3])));
+ 337              		.loc 1 62 5 is_stmt 1 view .LVU68
+ 338              		.loc 1 62 42 is_stmt 0 view .LVU69
+ 339 002c 9DF81230 		ldrb	r3, [sp, #18]	@ zero_extendqisi2
+ 340              		.loc 1 62 60 view .LVU70
+ 341 0030 9DF81360 		ldrb	r6, [sp, #19]	@ zero_extendqisi2
+ 342              		.loc 1 62 25 view .LVU71
+ 343 0034 46EA0326 		orr	r6, r6, r3, lsl #8
+ 344 0038 36B2     		sxth	r6, r6
+ 345              		.loc 1 62 21 view .LVU72
+ 346 003a 6684     		strh	r6, [r4, #34]	@ movhi
+  63:Core/Src/mpu6050.c ****     data->gyroZ_RAW = (((int16_t)(rawData[4] << 8 | rawData[5])));
+ 347              		.loc 1 63 5 is_stmt 1 view .LVU73
+ 348              		.loc 1 63 42 is_stmt 0 view .LVU74
+ 349 003c 9DF81430 		ldrb	r3, [sp, #20]	@ zero_extendqisi2
+ 350              		.loc 1 63 60 view .LVU75
+ 351 0040 9DF81550 		ldrb	r5, [sp, #21]	@ zero_extendqisi2
+ 352              		.loc 1 63 25 view .LVU76
+ 353 0044 45EA0325 		orr	r5, r5, r3, lsl #8
+ 354 0048 2DB2     		sxth	r5, r5
+ 355              		.loc 1 63 21 view .LVU77
+ 356 004a A584     		strh	r5, [r4, #36]	@ movhi
+  64:Core/Src/mpu6050.c **** 
+  65:Core/Src/mpu6050.c ****     data->gyroX = data->gyroX_RAW / 131.0 + 3.0;
+ 357              		.loc 1 65 5 is_stmt 1 view .LVU78
+ 358              		.loc 1 65 35 is_stmt 0 view .LVU79
+ 359 004c FFF7FEFF 		bl	__aeabi_i2d
+ 360              	.LVL23:
+ 361 0050 15A3     		adr	r3, .L12
+ 362 0052 D3E90023 		ldrd	r2, [r3]
+ 363 0056 FFF7FEFF 		bl	__aeabi_ddiv
+ 364              	.LVL24:
+ 365              		.loc 1 65 43 view .LVU80
+ 366 005a 0022     		movs	r2, #0
+ 367 005c 184B     		ldr	r3, .L12+24
+ 368 005e FFF7FEFF 		bl	__aeabi_dadd
+ 369              	.LVL25:
+ 370              		.loc 1 65 17 view .LVU81
+ 371 0062 C4E90A01 		strd	r0, [r4, #40]
+  66:Core/Src/mpu6050.c ****     data->gyroY = data->gyroY_RAW / 131.0 - 3.282442748091603;
+ 372              		.loc 1 66 5 is_stmt 1 view .LVU82
+ 373              		.loc 1 66 35 is_stmt 0 view .LVU83
+ 374 0066 3046     		mov	r0, r6
+ 375 0068 FFF7FEFF 		bl	__aeabi_i2d
+ 376              	.LVL26:
+ 377 006c 0EA3     		adr	r3, .L12
+ 378 006e D3E90023 		ldrd	r2, [r3]
+ 379 0072 FFF7FEFF 		bl	__aeabi_ddiv
+ 380              	.LVL27:
+ 381              		.loc 1 66 43 view .LVU84
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 9
+
+
+ 382 0076 0EA3     		adr	r3, .L12+8
+ 383 0078 D3E90023 		ldrd	r2, [r3]
+ 384 007c FFF7FEFF 		bl	__aeabi_dsub
+ 385              	.LVL28:
+ 386              		.loc 1 66 17 view .LVU85
+ 387 0080 C4E90C01 		strd	r0, [r4, #48]
+  67:Core/Src/mpu6050.c ****     data->gyroZ = data->gyroZ_RAW / 131.0 + 2.9847328244274811;
+ 388              		.loc 1 67 5 is_stmt 1 view .LVU86
+ 389              		.loc 1 67 35 is_stmt 0 view .LVU87
+ 390 0084 2846     		mov	r0, r5
+ 391 0086 FFF7FEFF 		bl	__aeabi_i2d
+ 392              	.LVL29:
+ 393 008a 07A3     		adr	r3, .L12
+ 394 008c D3E90023 		ldrd	r2, [r3]
+ 395 0090 FFF7FEFF 		bl	__aeabi_ddiv
+ 396              	.LVL30:
+ 397              		.loc 1 67 43 view .LVU88
+ 398 0094 08A3     		adr	r3, .L12+16
+ 399 0096 D3E90023 		ldrd	r2, [r3]
+ 400 009a FFF7FEFF 		bl	__aeabi_dadd
+ 401              	.LVL31:
+ 402              		.loc 1 67 17 view .LVU89
+ 403 009e C4E90E01 		strd	r0, [r4, #56]
+  68:Core/Src/mpu6050.c **** }
+ 404              		.loc 1 68 1 view .LVU90
+ 405 00a2 06B0     		add	sp, sp, #24
+ 406              	.LCFI9:
+ 407              		.cfi_def_cfa_offset 16
+ 408              		@ sp needed
+ 409 00a4 70BD     		pop	{r4, r5, r6, pc}
+ 410              	.LVL32:
+ 411              	.L13:
+ 412              		.loc 1 68 1 view .LVU91
+ 413 00a6 00BF     		.align	3
+ 414              	.L12:
+ 415 00a8 00000000 		.word	0
+ 416 00ac 00606040 		.word	1080057856
+ 417 00b0 CD5DF057 		.word	1475370445
+ 418 00b4 71420A40 		.word	1074414193
+ 419 00b8 BEB5619A 		.word	-1704872514
+ 420 00bc BBE00740 		.word	1074258107
+ 421 00c0 00000840 		.word	1074266112
+ 422              		.cfi_endproc
+ 423              	.LFE132:
+ 425              		.section	.text.readTempData,"ax",%progbits
+ 426              		.align	1
+ 427              		.global	readTempData
+ 428              		.syntax unified
+ 429              		.thumb
+ 430              		.thumb_func
+ 432              	readTempData:
+ 433              	.LVL33:
+ 434              	.LFB133:
+  69:Core/Src/mpu6050.c **** 
+  70:Core/Src/mpu6050.c **** void readTempData(I2C_HandleTypeDef *hi2c, MPU6050* data) {
+ 435              		.loc 1 70 59 is_stmt 1 view -0
+ 436              		.cfi_startproc
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 10
+
+
+ 437              		@ args = 0, pretend = 0, frame = 8
+ 438              		@ frame_needed = 0, uses_anonymous_args = 0
+ 439              		.loc 1 70 59 is_stmt 0 view .LVU93
+ 440 0000 10B5     		push	{r4, lr}
+ 441              	.LCFI10:
+ 442              		.cfi_def_cfa_offset 8
+ 443              		.cfi_offset 4, -8
+ 444              		.cfi_offset 14, -4
+ 445 0002 86B0     		sub	sp, sp, #24
+ 446              	.LCFI11:
+ 447              		.cfi_def_cfa_offset 32
+ 448 0004 0C46     		mov	r4, r1
+  71:Core/Src/mpu6050.c ****     int8_t rawData[2];
+ 449              		.loc 1 71 5 is_stmt 1 view .LVU94
+  72:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Read(hi2c, MPU6050_ADDR, MPU6050_TEMP_MEASR_REG, 1, rawData, 2, HAL_TIMEOUT);
+ 450              		.loc 1 72 5 view .LVU95
+ 451 0006 6423     		movs	r3, #100
+ 452 0008 0293     		str	r3, [sp, #8]
+ 453 000a 0223     		movs	r3, #2
+ 454 000c 0193     		str	r3, [sp, #4]
+ 455 000e 05AB     		add	r3, sp, #20
+ 456 0010 0093     		str	r3, [sp]
+ 457 0012 0123     		movs	r3, #1
+ 458 0014 4122     		movs	r2, #65
+ 459 0016 D021     		movs	r1, #208
+ 460              	.LVL34:
+ 461              		.loc 1 72 5 is_stmt 0 view .LVU96
+ 462 0018 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 463              	.LVL35:
+  73:Core/Src/mpu6050.c ****     data->temp_RAW = (((int16_t)(rawData[0] << 8 | rawData[1])));
+ 464              		.loc 1 73 5 is_stmt 1 view .LVU97
+ 465              		.loc 1 73 41 is_stmt 0 view .LVU98
+ 466 001c 9DF91430 		ldrsb	r3, [sp, #20]
+ 467              		.loc 1 73 59 view .LVU99
+ 468 0020 9DF91500 		ldrsb	r0, [sp, #21]
+ 469              		.loc 1 73 24 view .LVU100
+ 470 0024 40EA0320 		orr	r0, r0, r3, lsl #8
+ 471              		.loc 1 73 20 view .LVU101
+ 472 0028 A4F84000 		strh	r0, [r4, #64]	@ movhi
+  74:Core/Src/mpu6050.c **** 
+  75:Core/Src/mpu6050.c ****     data->temp = ((double)data->temp_RAW / 340.0) + 36.53;
+ 473              		.loc 1 75 5 is_stmt 1 view .LVU102
+ 474              		.loc 1 75 19 is_stmt 0 view .LVU103
+ 475 002c FFF7FEFF 		bl	__aeabi_i2d
+ 476              	.LVL36:
+ 477              		.loc 1 75 42 view .LVU104
+ 478 0030 0022     		movs	r2, #0
+ 479 0032 094B     		ldr	r3, .L16+8
+ 480 0034 FFF7FEFF 		bl	__aeabi_ddiv
+ 481              	.LVL37:
+ 482              		.loc 1 75 51 view .LVU105
+ 483 0038 05A3     		adr	r3, .L16
+ 484 003a D3E90023 		ldrd	r2, [r3]
+ 485 003e FFF7FEFF 		bl	__aeabi_dadd
+ 486              	.LVL38:
+ 487              		.loc 1 75 16 view .LVU106
+ 488 0042 C4E91201 		strd	r0, [r4, #72]
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 11
+
+
+  76:Core/Src/mpu6050.c **** }
+ 489              		.loc 1 76 1 view .LVU107
+ 490 0046 06B0     		add	sp, sp, #24
+ 491              	.LCFI12:
+ 492              		.cfi_def_cfa_offset 8
+ 493              		@ sp needed
+ 494 0048 10BD     		pop	{r4, pc}
+ 495              	.LVL39:
+ 496              	.L17:
+ 497              		.loc 1 76 1 view .LVU108
+ 498 004a 00BFAFF3 		.align	3
+ 498      0080
+ 499              	.L16:
+ 500 0050 A4703D0A 		.word	171798692
+ 501 0054 D7434240 		.word	1078084567
+ 502 0058 00407540 		.word	1081425920
+ 503              		.cfi_endproc
+ 504              	.LFE133:
+ 506              		.global	__aeabi_dcmpeq
+ 507              		.section	.text.calculateAngleAccel,"ax",%progbits
+ 508              		.align	1
+ 509              		.global	calculateAngleAccel
+ 510              		.syntax unified
+ 511              		.thumb
+ 512              		.thumb_func
+ 514              	calculateAngleAccel:
+ 515              	.LVL40:
+ 516              	.LFB134:
+  77:Core/Src/mpu6050.c **** 
+  78:Core/Src/mpu6050.c **** void calculateAngleAccel(I2C_HandleTypeDef *hi2c, MPU6050* data) {
+ 517              		.loc 1 78 66 is_stmt 1 view -0
+ 518              		.cfi_startproc
+ 519              		@ args = 0, pretend = 0, frame = 0
+ 520              		@ frame_needed = 0, uses_anonymous_args = 0
+ 521              		.loc 1 78 66 is_stmt 0 view .LVU110
+ 522 0000 2DE9D043 		push	{r4, r6, r7, r8, r9, lr}
+ 523              	.LCFI13:
+ 524              		.cfi_def_cfa_offset 24
+ 525              		.cfi_offset 4, -24
+ 526              		.cfi_offset 6, -20
+ 527              		.cfi_offset 7, -16
+ 528              		.cfi_offset 8, -12
+ 529              		.cfi_offset 9, -8
+ 530              		.cfi_offset 14, -4
+ 531 0004 2DED088B 		vpush.64	{d8, d9, d10, d11}
+ 532              	.LCFI14:
+ 533              		.cfi_def_cfa_offset 56
+ 534              		.cfi_offset 80, -56
+ 535              		.cfi_offset 81, -52
+ 536              		.cfi_offset 82, -48
+ 537              		.cfi_offset 83, -44
+ 538              		.cfi_offset 84, -40
+ 539              		.cfi_offset 85, -36
+ 540              		.cfi_offset 86, -32
+ 541              		.cfi_offset 87, -28
+ 542 0008 0C46     		mov	r4, r1
+  79:Core/Src/mpu6050.c ****     double rollDenominator = sqrt(pow((double)(data->accelX),2) + pow((double)(data->accelZ),2)); 
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 12
+
+
+ 543              		.loc 1 79 5 is_stmt 1 view .LVU111
+ 544              		.loc 1 79 35 is_stmt 0 view .LVU112
+ 545 000a 91ED029B 		vldr.64	d9, [r1, #8]
+ 546 000e 9FED488B 		vldr.64	d8, .L30
+ 547 0012 B0EE481A 		vmov.f32	s2, s16
+ 548 0016 F0EE681A 		vmov.f32	s3, s17
+ 549 001a B0EE490A 		vmov.f32	s0, s18
+ 550 001e F0EE690A 		vmov.f32	s1, s19
+ 551 0022 FFF7FEFF 		bl	pow
+ 552              	.LVL41:
+ 553              		.loc 1 79 35 view .LVU113
+ 554 0026 57EC106B 		vmov	r6, r7, d0
+ 555              		.loc 1 79 67 discriminator 1 view .LVU114
+ 556 002a 94ED06AB 		vldr.64	d10, [r4, #24]
+ 557 002e B0EE481A 		vmov.f32	s2, s16
+ 558 0032 F0EE681A 		vmov.f32	s3, s17
+ 559 0036 B0EE4A0A 		vmov.f32	s0, s20
+ 560 003a F0EE6A0A 		vmov.f32	s1, s21
+ 561 003e FFF7FEFF 		bl	pow
+ 562              	.LVL42:
+ 563 0042 53EC102B 		vmov	r2, r3, d0
+ 564              		.loc 1 79 30 discriminator 2 view .LVU115
+ 565 0046 3046     		mov	r0, r6
+ 566 0048 3946     		mov	r1, r7
+ 567 004a FFF7FEFF 		bl	__aeabi_dadd
+ 568              	.LVL43:
+ 569 004e 41EC100B 		vmov	d0, r0, r1
+ 570 0052 FFF7FEFF 		bl	sqrt
+ 571              	.LVL44:
+ 572 0056 59EC108B 		vmov	r8, r9, d0
+ 573              	.LVL45:
+  80:Core/Src/mpu6050.c ****     double pitchDenominator = sqrt(pow((double)(data->accelY),2) + pow((double)(data->accelZ),2)); 
+ 574              		.loc 1 80 5 is_stmt 1 view .LVU116
+ 575              		.loc 1 80 36 is_stmt 0 view .LVU117
+ 576 005a 94ED04BB 		vldr.64	d11, [r4, #16]
+ 577 005e B0EE481A 		vmov.f32	s2, s16
+ 578 0062 F0EE681A 		vmov.f32	s3, s17
+ 579 0066 B0EE4B0A 		vmov.f32	s0, s22
+ 580 006a F0EE6B0A 		vmov.f32	s1, s23
+ 581 006e FFF7FEFF 		bl	pow
+ 582              	.LVL46:
+ 583 0072 57EC106B 		vmov	r6, r7, d0
+ 584              		.loc 1 80 68 discriminator 1 view .LVU118
+ 585 0076 B0EE481A 		vmov.f32	s2, s16
+ 586 007a F0EE681A 		vmov.f32	s3, s17
+ 587 007e B0EE4A0A 		vmov.f32	s0, s20
+ 588 0082 F0EE6A0A 		vmov.f32	s1, s21
+ 589 0086 FFF7FEFF 		bl	pow
+ 590              	.LVL47:
+ 591 008a 53EC102B 		vmov	r2, r3, d0
+ 592              		.loc 1 80 31 discriminator 2 view .LVU119
+ 593 008e 3046     		mov	r0, r6
+ 594 0090 3946     		mov	r1, r7
+ 595 0092 FFF7FEFF 		bl	__aeabi_dadd
+ 596              	.LVL48:
+ 597 0096 41EC100B 		vmov	d0, r0, r1
+ 598 009a FFF7FEFF 		bl	sqrt
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 13
+
+
+ 599              	.LVL49:
+ 600 009e 57EC106B 		vmov	r6, r7, d0
+ 601              	.LVL50:
+  81:Core/Src/mpu6050.c **** 
+  82:Core/Src/mpu6050.c ****     if (rollDenominator != 0.0) {
+ 602              		.loc 1 82 5 is_stmt 1 view .LVU120
+ 603              		.loc 1 82 8 is_stmt 0 view .LVU121
+ 604 00a2 0022     		movs	r2, #0
+ 605 00a4 0023     		movs	r3, #0
+ 606 00a6 4046     		mov	r0, r8
+ 607 00a8 4946     		mov	r1, r9
+ 608 00aa FFF7FEFF 		bl	__aeabi_dcmpeq
+ 609              	.LVL51:
+ 610 00ae A0BB     		cbnz	r0, .L27
+  83:Core/Src/mpu6050.c ****         data->rollAngle = atan((double)(data->accelY)/rollDenominator) * RAD_TO_DEG;
+ 611              		.loc 1 83 9 is_stmt 1 view .LVU122
+ 612              		.loc 1 83 27 is_stmt 0 view .LVU123
+ 613 00b0 4246     		mov	r2, r8
+ 614 00b2 4B46     		mov	r3, r9
+ 615 00b4 51EC1B0B 		vmov	r0, r1, d11
+ 616 00b8 FFF7FEFF 		bl	__aeabi_ddiv
+ 617              	.LVL52:
+ 618 00bc 41EC100B 		vmov	d0, r0, r1
+ 619 00c0 FFF7FEFF 		bl	atan
+ 620              	.LVL53:
+ 621 00c4 51EC100B 		vmov	r0, r1, d0
+ 622              		.loc 1 83 72 discriminator 1 view .LVU124
+ 623 00c8 1BA3     		adr	r3, .L30+8
+ 624 00ca D3E90023 		ldrd	r2, [r3]
+ 625 00ce FFF7FEFF 		bl	__aeabi_dmul
+ 626              	.LVL54:
+ 627              		.loc 1 83 25 discriminator 1 view .LVU125
+ 628 00d2 C4E91601 		strd	r0, [r4, #88]
+ 629              	.L21:
+  84:Core/Src/mpu6050.c ****     }
+  85:Core/Src/mpu6050.c ****     else {
+  86:Core/Src/mpu6050.c ****         data->rollAngle = 0.0;
+  87:Core/Src/mpu6050.c ****     }
+  88:Core/Src/mpu6050.c ****     if (pitchDenominator != 0.0) {
+ 630              		.loc 1 88 5 is_stmt 1 view .LVU126
+ 631              		.loc 1 88 8 is_stmt 0 view .LVU127
+ 632 00d6 0022     		movs	r2, #0
+ 633 00d8 0023     		movs	r3, #0
+ 634 00da 3046     		mov	r0, r6
+ 635 00dc 3946     		mov	r1, r7
+ 636 00de FFF7FEFF 		bl	__aeabi_dcmpeq
+ 637              	.LVL55:
+ 638 00e2 F8B9     		cbnz	r0, .L28
+  89:Core/Src/mpu6050.c ****         data->pitchAngle = atan((-1*(double)(data->accelX))/pitchDenominator) * RAD_TO_DEG;
+ 639              		.loc 1 89 9 is_stmt 1 view .LVU128
+ 640              		.loc 1 89 36 is_stmt 0 view .LVU129
+ 641 00e4 19EE100A 		vmov	r0, s18	@ int
+ 642 00e8 19EE903A 		vmov	r3, s19	@ int
+ 643 00ec 03F10041 		add	r1, r3, #-2147483648
+ 644              		.loc 1 89 28 view .LVU130
+ 645 00f0 3246     		mov	r2, r6
+ 646 00f2 3B46     		mov	r3, r7
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 14
+
+
+ 647 00f4 FFF7FEFF 		bl	__aeabi_ddiv
+ 648              	.LVL56:
+ 649 00f8 41EC100B 		vmov	d0, r0, r1
+ 650 00fc FFF7FEFF 		bl	atan
+ 651              	.LVL57:
+ 652 0100 51EC100B 		vmov	r0, r1, d0
+ 653              		.loc 1 89 79 discriminator 1 view .LVU131
+ 654 0104 0CA3     		adr	r3, .L30+8
+ 655 0106 D3E90023 		ldrd	r2, [r3]
+ 656 010a FFF7FEFF 		bl	__aeabi_dmul
+ 657              	.LVL58:
+ 658              		.loc 1 89 26 discriminator 1 view .LVU132
+ 659 010e C4E91401 		strd	r0, [r4, #80]
+ 660              	.L18:
+  90:Core/Src/mpu6050.c ****     }
+  91:Core/Src/mpu6050.c ****     else {
+  92:Core/Src/mpu6050.c ****         data->pitchAngle = 0.0;
+  93:Core/Src/mpu6050.c ****     }
+  94:Core/Src/mpu6050.c **** }
+ 661              		.loc 1 94 1 view .LVU133
+ 662 0112 BDEC088B 		vldm	sp!, {d8-d11}
+ 663              	.LCFI15:
+ 664              		.cfi_remember_state
+ 665              		.cfi_restore 86
+ 666              		.cfi_restore 87
+ 667              		.cfi_restore 84
+ 668              		.cfi_restore 85
+ 669              		.cfi_restore 82
+ 670              		.cfi_restore 83
+ 671              		.cfi_restore 80
+ 672              		.cfi_restore 81
+ 673              		.cfi_def_cfa_offset 24
+ 674 0116 BDE8D083 		pop	{r4, r6, r7, r8, r9, pc}
+ 675              	.LVL59:
+ 676              	.L27:
+ 677              	.LCFI16:
+ 678              		.cfi_restore_state
+  86:Core/Src/mpu6050.c ****     }
+ 679              		.loc 1 86 9 is_stmt 1 view .LVU134
+  86:Core/Src/mpu6050.c ****     }
+ 680              		.loc 1 86 25 is_stmt 0 view .LVU135
+ 681 011a 0022     		movs	r2, #0
+ 682 011c 0023     		movs	r3, #0
+ 683 011e C4E91623 		strd	r2, [r4, #88]
+ 684 0122 D8E7     		b	.L21
+ 685              	.L28:
+  92:Core/Src/mpu6050.c ****     }
+ 686              		.loc 1 92 9 is_stmt 1 view .LVU136
+  92:Core/Src/mpu6050.c ****     }
+ 687              		.loc 1 92 26 is_stmt 0 view .LVU137
+ 688 0124 0022     		movs	r2, #0
+ 689 0126 0023     		movs	r3, #0
+ 690 0128 C4E91423 		strd	r2, [r4, #80]
+ 691              		.loc 1 94 1 view .LVU138
+ 692 012c F1E7     		b	.L18
+ 693              	.L31:
+ 694 012e 00BF     		.align	3
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 15
+
+
+ 695              	.L30:
+ 696 0130 00000000 		.word	0
+ 697 0134 00000040 		.word	1073741824
+ 698 0138 F8C1631A 		.word	442745336
+ 699 013c DCA54C40 		.word	1078765020
+ 700              		.cfi_endproc
+ 701              	.LFE134:
+ 703              		.global	__aeabi_ui2d
+ 704              		.section	.text.calculateAngleGyro,"ax",%progbits
+ 705              		.align	1
+ 706              		.global	calculateAngleGyro
+ 707              		.syntax unified
+ 708              		.thumb
+ 709              		.thumb_func
+ 711              	calculateAngleGyro:
+ 712              	.LVL60:
+ 713              	.LFB135:
+  95:Core/Src/mpu6050.c **** 
+  96:Core/Src/mpu6050.c **** void calculateAngleGyro(MPU6050* data) {
+ 714              		.loc 1 96 40 is_stmt 1 view -0
+ 715              		.cfi_startproc
+ 716              		@ args = 0, pretend = 0, frame = 0
+ 717              		@ frame_needed = 0, uses_anonymous_args = 0
+ 718              		.loc 1 96 40 is_stmt 0 view .LVU140
+ 719 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 720              	.LCFI17:
+ 721              		.cfi_def_cfa_offset 24
+ 722              		.cfi_offset 3, -24
+ 723              		.cfi_offset 4, -20
+ 724              		.cfi_offset 5, -16
+ 725              		.cfi_offset 6, -12
+ 726              		.cfi_offset 7, -8
+ 727              		.cfi_offset 14, -4
+ 728 0002 2DED028B 		vpush.64	{d8}
+ 729              	.LCFI18:
+ 730              		.cfi_def_cfa_offset 32
+ 731              		.cfi_offset 80, -32
+ 732              		.cfi_offset 81, -28
+ 733 0006 0446     		mov	r4, r0
+  97:Core/Src/mpu6050.c ****     data->normalizeTick = ((double)(HAL_GetTick()) / 1000.0 ) - 5.0;
+ 734              		.loc 1 97 5 is_stmt 1 view .LVU141
+ 735              		.loc 1 97 37 is_stmt 0 view .LVU142
+ 736 0008 FFF7FEFF 		bl	HAL_GetTick
+ 737              	.LVL61:
+ 738              		.loc 1 97 28 discriminator 1 view .LVU143
+ 739 000c FFF7FEFF 		bl	__aeabi_ui2d
+ 740              	.LVL62:
+ 741              		.loc 1 97 52 discriminator 1 view .LVU144
+ 742 0010 0022     		movs	r2, #0
+ 743 0012 2A4B     		ldr	r3, .L36
+ 744 0014 FFF7FEFF 		bl	__aeabi_ddiv
+ 745              	.LVL63:
+ 746              		.loc 1 97 63 discriminator 1 view .LVU145
+ 747 0018 0022     		movs	r2, #0
+ 748 001a 294B     		ldr	r3, .L36+4
+ 749 001c FFF7FEFF 		bl	__aeabi_dsub
+ 750              	.LVL64:
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 16
+
+
+ 751 0020 0246     		mov	r2, r0
+ 752 0022 0B46     		mov	r3, r1
+ 753              		.loc 1 97 25 discriminator 1 view .LVU146
+ 754 0024 C4E91C23 		strd	r2, [r4, #112]
+  98:Core/Src/mpu6050.c ****     data->dt = (data->normalizeTick - timer) / 1000.0;
+ 755              		.loc 1 98 5 is_stmt 1 view .LVU147
+ 756              		.loc 1 98 37 is_stmt 0 view .LVU148
+ 757 0028 264B     		ldr	r3, .L36+8
+ 758 002a D3E90023 		ldrd	r2, [r3]
+ 759 002e FFF7FEFF 		bl	__aeabi_dsub
+ 760              	.LVL65:
+ 761              		.loc 1 98 46 view .LVU149
+ 762 0032 0022     		movs	r2, #0
+ 763 0034 214B     		ldr	r3, .L36
+ 764 0036 FFF7FEFF 		bl	__aeabi_ddiv
+ 765              	.LVL66:
+ 766 003a 0646     		mov	r6, r0
+ 767 003c 0F46     		mov	r7, r1
+ 768              		.loc 1 98 14 view .LVU150
+ 769 003e C4E91A67 		strd	r6, [r4, #104]
+  99:Core/Src/mpu6050.c ****     if (abs(data->yawAngle) + abs(data->gyroZ*data->dt) > INTEGRAL_CAP_STRAIGHT_LINE) {
+ 770              		.loc 1 99 5 is_stmt 1 view .LVU151
+ 771              	.LBB2:
+ 772              		.loc 1 99 9 is_stmt 0 view .LVU152
+ 773 0042 94ED188B 		vldr.64	d8, [r4, #96]
+ 774 0046 B0EE480A 		vmov.f32	s0, s16
+ 775 004a F0EE680A 		vmov.f32	s1, s17
+ 776 004e FFF7FEFF 		bl	abs
+ 777              	.LVL67:
+ 778 0052 0546     		mov	r5, r0
+ 779              		.loc 1 99 31 discriminator 1 view .LVU153
+ 780 0054 D4E90E23 		ldrd	r2, [r4, #56]
+ 781 0058 3046     		mov	r0, r6
+ 782 005a 3946     		mov	r1, r7
+ 783 005c FFF7FEFF 		bl	__aeabi_dmul
+ 784              	.LVL68:
+ 785 0060 0646     		mov	r6, r0
+ 786 0062 0F46     		mov	r7, r1
+ 787 0064 47EC106B 		vmov	d0, r6, r7
+ 788 0068 FFF7FEFF 		bl	abs
+ 789              	.LVL69:
+ 790              		.loc 1 99 29 discriminator 2 view .LVU154
+ 791 006c 0544     		add	r5, r5, r0
+ 792              		.loc 1 99 8 discriminator 2 view .LVU155
+ 793 006e 0F2D     		cmp	r5, #15
+ 794 0070 1BDD     		ble	.L33
+ 100:Core/Src/mpu6050.c ****         data->yawAngle = 0;
+ 795              		.loc 1 100 9 is_stmt 1 view .LVU156
+ 796              		.loc 1 100 24 is_stmt 0 view .LVU157
+ 797 0072 0022     		movs	r2, #0
+ 798 0074 0023     		movs	r3, #0
+ 799 0076 C4E91823 		strd	r2, [r4, #96]
+ 101:Core/Src/mpu6050.c ****         data->yawAngle = data->yawAngle + data->gyroZ*data->dt;
+ 800              		.loc 1 101 9 is_stmt 1 view .LVU158
+ 801              		.loc 1 101 41 is_stmt 0 view .LVU159
+ 802 007a 3046     		mov	r0, r6
+ 803 007c 3946     		mov	r1, r7
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 17
+
+
+ 804 007e FFF7FEFF 		bl	__aeabi_dadd
+ 805              	.LVL70:
+ 806              		.loc 1 101 24 view .LVU160
+ 807 0082 C4E91801 		strd	r0, [r4, #96]
+ 808              	.L34:
+ 809              	.LBE2:
+ 102:Core/Src/mpu6050.c ****     }
+ 103:Core/Src/mpu6050.c ****     else {
+ 104:Core/Src/mpu6050.c ****         data->yawAngle = data->yawAngle + data->gyroZ*data->dt;
+ 105:Core/Src/mpu6050.c ****     }
+ 106:Core/Src/mpu6050.c ****     timer = ((double)HAL_GetTick() / 1000.0) - 5;
+ 810              		.loc 1 106 5 is_stmt 1 view .LVU161
+ 811              		.loc 1 106 22 is_stmt 0 view .LVU162
+ 812 0086 FFF7FEFF 		bl	HAL_GetTick
+ 813              	.LVL71:
+ 814              		.loc 1 106 14 discriminator 1 view .LVU163
+ 815 008a FFF7FEFF 		bl	__aeabi_ui2d
+ 816              	.LVL72:
+ 817              		.loc 1 106 36 discriminator 1 view .LVU164
+ 818 008e 0022     		movs	r2, #0
+ 819 0090 0A4B     		ldr	r3, .L36
+ 820 0092 FFF7FEFF 		bl	__aeabi_ddiv
+ 821              	.LVL73:
+ 822              		.loc 1 106 46 discriminator 1 view .LVU165
+ 823 0096 0022     		movs	r2, #0
+ 824 0098 094B     		ldr	r3, .L36+4
+ 825 009a FFF7FEFF 		bl	__aeabi_dsub
+ 826              	.LVL74:
+ 827              		.loc 1 106 11 discriminator 1 view .LVU166
+ 828 009e 094B     		ldr	r3, .L36+8
+ 829 00a0 C3E90001 		strd	r0, [r3]
+ 107:Core/Src/mpu6050.c **** }
+ 830              		.loc 1 107 1 view .LVU167
+ 831 00a4 BDEC028B 		vldm	sp!, {d8}
+ 832              	.LCFI19:
+ 833              		.cfi_remember_state
+ 834              		.cfi_restore 80
+ 835              		.cfi_restore 81
+ 836              		.cfi_def_cfa_offset 24
+ 837 00a8 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 838              	.LVL75:
+ 839              	.L33:
+ 840              	.LCFI20:
+ 841              		.cfi_restore_state
+ 842              	.LBB3:
+ 104:Core/Src/mpu6050.c ****     }
+ 843              		.loc 1 104 9 is_stmt 1 view .LVU168
+ 104:Core/Src/mpu6050.c ****     }
+ 844              		.loc 1 104 41 is_stmt 0 view .LVU169
+ 845 00aa 3246     		mov	r2, r6
+ 846 00ac 3B46     		mov	r3, r7
+ 847 00ae 51EC180B 		vmov	r0, r1, d8
+ 848 00b2 FFF7FEFF 		bl	__aeabi_dadd
+ 849              	.LVL76:
+ 104:Core/Src/mpu6050.c ****     }
+ 850              		.loc 1 104 24 view .LVU170
+ 851 00b6 C4E91801 		strd	r0, [r4, #96]
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 18
+
+
+ 852 00ba E4E7     		b	.L34
+ 853              	.L37:
+ 854              		.align	2
+ 855              	.L36:
+ 856 00bc 00408F40 		.word	1083129856
+ 857 00c0 00001440 		.word	1075052544
+ 858 00c4 00000000 		.word	timer
+ 859              	.LBE3:
+ 860              		.cfi_endproc
+ 861              	.LFE135:
+ 863              		.section	.text.readGyroGx,"ax",%progbits
+ 864              		.align	1
+ 865              		.global	readGyroGx
+ 866              		.syntax unified
+ 867              		.thumb
+ 868              		.thumb_func
+ 870              	readGyroGx:
+ 871              	.LVL77:
+ 872              	.LFB136:
+ 108:Core/Src/mpu6050.c **** 
+ 109:Core/Src/mpu6050.c **** void readGyroGx(I2C_HandleTypeDef *hi2c, MPU6050*data) {
+ 873              		.loc 1 109 56 is_stmt 1 view -0
+ 874              		.cfi_startproc
+ 875              		@ args = 0, pretend = 0, frame = 8
+ 876              		@ frame_needed = 0, uses_anonymous_args = 0
+ 877              		.loc 1 109 56 is_stmt 0 view .LVU172
+ 878 0000 10B5     		push	{r4, lr}
+ 879              	.LCFI21:
+ 880              		.cfi_def_cfa_offset 8
+ 881              		.cfi_offset 4, -8
+ 882              		.cfi_offset 14, -4
+ 883 0002 86B0     		sub	sp, sp, #24
+ 884              	.LCFI22:
+ 885              		.cfi_def_cfa_offset 32
+ 886 0004 0C46     		mov	r4, r1
+ 110:Core/Src/mpu6050.c ****     uint8_t rawData[2];
+ 887              		.loc 1 110 5 is_stmt 1 view .LVU173
+ 111:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Read(hi2c, MPU6050_ADDR, MPU6050_GYRO_MEASR_REG, 1, rawData, 2, HAL_TIMEOUT);
+ 888              		.loc 1 111 5 view .LVU174
+ 889 0006 6423     		movs	r3, #100
+ 890 0008 0293     		str	r3, [sp, #8]
+ 891 000a 0223     		movs	r3, #2
+ 892 000c 0193     		str	r3, [sp, #4]
+ 893 000e 05AB     		add	r3, sp, #20
+ 894 0010 0093     		str	r3, [sp]
+ 895 0012 0123     		movs	r3, #1
+ 896 0014 4322     		movs	r2, #67
+ 897 0016 D021     		movs	r1, #208
+ 898              	.LVL78:
+ 899              		.loc 1 111 5 is_stmt 0 view .LVU175
+ 900 0018 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 901              	.LVL79:
+ 112:Core/Src/mpu6050.c ****     data->gyroX_RAW = (int16_t)(rawData[0] << 8 | rawData[1]);
+ 902              		.loc 1 112 5 is_stmt 1 view .LVU176
+ 903              		.loc 1 112 40 is_stmt 0 view .LVU177
+ 904 001c 9DF81430 		ldrb	r3, [sp, #20]	@ zero_extendqisi2
+ 905              		.loc 1 112 58 view .LVU178
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 19
+
+
+ 906 0020 9DF81500 		ldrb	r0, [sp, #21]	@ zero_extendqisi2
+ 907              		.loc 1 112 23 view .LVU179
+ 908 0024 40EA0320 		orr	r0, r0, r3, lsl #8
+ 909 0028 00B2     		sxth	r0, r0
+ 910              		.loc 1 112 21 view .LVU180
+ 911 002a 2084     		strh	r0, [r4, #32]	@ movhi
+ 113:Core/Src/mpu6050.c ****     data->gyroX = data->gyroX_RAW / 131.0;
+ 912              		.loc 1 113 5 is_stmt 1 view .LVU181
+ 913              		.loc 1 113 35 is_stmt 0 view .LVU182
+ 914 002c FFF7FEFF 		bl	__aeabi_i2d
+ 915              	.LVL80:
+ 916 0030 05A3     		adr	r3, .L40
+ 917 0032 D3E90023 		ldrd	r2, [r3]
+ 918 0036 FFF7FEFF 		bl	__aeabi_ddiv
+ 919              	.LVL81:
+ 920              		.loc 1 113 17 view .LVU183
+ 921 003a C4E90A01 		strd	r0, [r4, #40]
+ 114:Core/Src/mpu6050.c **** }
+ 922              		.loc 1 114 1 view .LVU184
+ 923 003e 06B0     		add	sp, sp, #24
+ 924              	.LCFI23:
+ 925              		.cfi_def_cfa_offset 8
+ 926              		@ sp needed
+ 927 0040 10BD     		pop	{r4, pc}
+ 928              	.LVL82:
+ 929              	.L41:
+ 930              		.loc 1 114 1 view .LVU185
+ 931 0042 00BFAFF3 		.align	3
+ 931      0080
+ 932              	.L40:
+ 933 0048 00000000 		.word	0
+ 934 004c 00606040 		.word	1080057856
+ 935              		.cfi_endproc
+ 936              	.LFE136:
+ 938              		.section	.text.readAccelAx,"ax",%progbits
+ 939              		.align	1
+ 940              		.global	readAccelAx
+ 941              		.syntax unified
+ 942              		.thumb
+ 943              		.thumb_func
+ 945              	readAccelAx:
+ 946              	.LVL83:
+ 947              	.LFB137:
+ 115:Core/Src/mpu6050.c **** 
+ 116:Core/Src/mpu6050.c **** void readAccelAx(I2C_HandleTypeDef *hi2c, MPU6050*data) {
+ 948              		.loc 1 116 57 is_stmt 1 view -0
+ 949              		.cfi_startproc
+ 950              		@ args = 0, pretend = 0, frame = 8
+ 951              		@ frame_needed = 0, uses_anonymous_args = 0
+ 952              		.loc 1 116 57 is_stmt 0 view .LVU187
+ 953 0000 10B5     		push	{r4, lr}
+ 954              	.LCFI24:
+ 955              		.cfi_def_cfa_offset 8
+ 956              		.cfi_offset 4, -8
+ 957              		.cfi_offset 14, -4
+ 958 0002 86B0     		sub	sp, sp, #24
+ 959              	.LCFI25:
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 20
+
+
+ 960              		.cfi_def_cfa_offset 32
+ 961 0004 0C46     		mov	r4, r1
+ 117:Core/Src/mpu6050.c ****     uint8_t rawData[2];
+ 962              		.loc 1 117 5 is_stmt 1 view .LVU188
+ 118:Core/Src/mpu6050.c ****     HAL_I2C_Mem_Read(hi2c, MPU6050_ADDR, MPU6050_ACCEL_MEASR_REG, 1, rawData, 2, HAL_TIMEOUT);
+ 963              		.loc 1 118 5 view .LVU189
+ 964 0006 6423     		movs	r3, #100
+ 965 0008 0293     		str	r3, [sp, #8]
+ 966 000a 0223     		movs	r3, #2
+ 967 000c 0193     		str	r3, [sp, #4]
+ 968 000e 05AB     		add	r3, sp, #20
+ 969 0010 0093     		str	r3, [sp]
+ 970 0012 0123     		movs	r3, #1
+ 971 0014 3B22     		movs	r2, #59
+ 972 0016 D021     		movs	r1, #208
+ 973              	.LVL84:
+ 974              		.loc 1 118 5 is_stmt 0 view .LVU190
+ 975 0018 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 976              	.LVL85:
+ 119:Core/Src/mpu6050.c ****     data->accelX_RAW = (int16_t)(rawData[0] << 8 | rawData[1]);
+ 977              		.loc 1 119 5 is_stmt 1 view .LVU191
+ 978              		.loc 1 119 41 is_stmt 0 view .LVU192
+ 979 001c 9DF81430 		ldrb	r3, [sp, #20]	@ zero_extendqisi2
+ 980              		.loc 1 119 59 view .LVU193
+ 981 0020 9DF81500 		ldrb	r0, [sp, #21]	@ zero_extendqisi2
+ 982              		.loc 1 119 24 view .LVU194
+ 983 0024 40EA0320 		orr	r0, r0, r3, lsl #8
+ 984 0028 00B2     		sxth	r0, r0
+ 985              		.loc 1 119 22 view .LVU195
+ 986 002a 2080     		strh	r0, [r4]	@ movhi
+ 120:Core/Src/mpu6050.c ****     data->accelX = data->accelX_RAW / 131.0;
+ 987              		.loc 1 120 5 is_stmt 1 view .LVU196
+ 988              		.loc 1 120 37 is_stmt 0 view .LVU197
+ 989 002c FFF7FEFF 		bl	__aeabi_i2d
+ 990              	.LVL86:
+ 991 0030 05A3     		adr	r3, .L44
+ 992 0032 D3E90023 		ldrd	r2, [r3]
+ 993 0036 FFF7FEFF 		bl	__aeabi_ddiv
+ 994              	.LVL87:
+ 995              		.loc 1 120 18 view .LVU198
+ 996 003a C4E90201 		strd	r0, [r4, #8]
+ 121:Core/Src/mpu6050.c ****     return;
+ 997              		.loc 1 121 5 is_stmt 1 view .LVU199
+ 122:Core/Src/mpu6050.c **** }...
+ 998              		.loc 1 122 1 is_stmt 0 view .LVU200
+ 999 003e 06B0     		add	sp, sp, #24
+ 1000              	.LCFI26:
+ 1001              		.cfi_def_cfa_offset 8
+ 1002              		@ sp needed
+ 1003 0040 10BD     		pop	{r4, pc}
+ 1004              	.LVL88:
+ 1005              	.L45:
+ 1006              		.loc 1 122 1 view .LVU201
+ 1007 0042 00BFAFF3 		.align	3
+ 1007      0080
+ 1008              	.L44:
+ 1009 0048 00000000 		.word	0
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 21
+
+
+ 1010 004c 00606040 		.word	1080057856
+ 1011              		.cfi_endproc
+ 1012              	.LFE137:
+ 1014              		.global	timer
+ 1015              		.section	.bss.timer,"aw",%nobits
+ 1016              		.align	3
+ 1019              	timer:
+ 1020 0000 00000000 		.space	8
+ 1020      00000000 
+ 1021              		.text
+ 1022              	.Letext0:
+ 1023              		.file 2 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/machine/_defa
+ 1024              		.file 3 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
+ 1025              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h"
+ 1026              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 1027              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 1028              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
+ 1029              		.file 8 "Core/Inc/mpu6050.h"
+ 1030              		.file 9 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/math.h"
+ 1031              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ 1032              		.file 11 "<built-in>"
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s 			page 22
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mpu6050.c
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:21     .text.mpu6050Init:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:27     .text.mpu6050Init:00000000 mpu6050Init
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:149    .text.readAccelData:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:155    .text.readAccelData:00000000 readAccelData
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:277    .text.readAccelData:0000009c $d
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:287    .text.readGyroData:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:293    .text.readGyroData:00000000 readGyroData
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:415    .text.readGyroData:000000a8 $d
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:426    .text.readTempData:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:432    .text.readTempData:00000000 readTempData
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:500    .text.readTempData:00000050 $d
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:508    .text.calculateAngleAccel:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:514    .text.calculateAngleAccel:00000000 calculateAngleAccel
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:696    .text.calculateAngleAccel:00000130 $d
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:705    .text.calculateAngleGyro:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:711    .text.calculateAngleGyro:00000000 calculateAngleGyro
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:856    .text.calculateAngleGyro:000000bc $d
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:1019   .bss.timer:00000000 timer
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:864    .text.readGyroGx:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:870    .text.readGyroGx:00000000 readGyroGx
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:933    .text.readGyroGx:00000048 $d
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:939    .text.readAccelAx:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:945    .text.readAccelAx:00000000 readAccelAx
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:1009   .text.readAccelAx:00000048 $d
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccFhJ3BL.s:1016   .bss.timer:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_I2C_Mem_Read
+HAL_I2C_Mem_Write
+__aeabi_i2d
+__aeabi_dmul
+__aeabi_dsub
+__aeabi_ddiv
+__aeabi_dadd
+__aeabi_dcmpeq
+pow
+sqrt
+atan
+__aeabi_ui2d
+HAL_GetTick
+abs
