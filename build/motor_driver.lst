@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cchmQtSQ.s 			page 1
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -20,11 +20,306 @@ ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cchmQtSQ.s 			page 1
   17              	.Ltext0:
   18              		.cfi_sections	.debug_frame
   19              		.file 1 "Core/Src/motor_driver.c"
-  20              	.Letext0:
-ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cchmQtSQ.s 			page 2
+  20              		.section	.text.motorLeftOFF,"ax",%progbits
+  21              		.align	1
+  22              		.global	motorLeftOFF
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	motorLeftOFF:
+  28              	.LFB130:
+   1:Core/Src/motor_driver.c **** #include "motor_driver.h"
+   2:Core/Src/motor_driver.c **** 
+   3:Core/Src/motor_driver.c **** void motorLeftOFF(void) {
+  29              		.loc 1 3 25 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 10B5     		push	{r4, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+   4:Core/Src/motor_driver.c ****     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+  38              		.loc 1 4 5 view .LVU1
+  39 0002 064C     		ldr	r4, .L3
+  40 0004 0022     		movs	r2, #0
+  41 0006 2021     		movs	r1, #32
+  42 0008 2046     		mov	r0, r4
+  43 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
+  44              	.LVL0:
+   5:Core/Src/motor_driver.c ****     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+  45              		.loc 1 5 5 view .LVU2
+  46 000e 0022     		movs	r2, #0
+  47 0010 1021     		movs	r1, #16
+  48 0012 2046     		mov	r0, r4
+  49 0014 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  50              	.LVL1:
+   6:Core/Src/motor_driver.c **** }
+  51              		.loc 1 6 1 is_stmt 0 view .LVU3
+  52 0018 10BD     		pop	{r4, pc}
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s 			page 2
+
+
+  53              	.L4:
+  54 001a 00BF     		.align	2
+  55              	.L3:
+  56 001c 00040240 		.word	1073873920
+  57              		.cfi_endproc
+  58              	.LFE130:
+  60              		.section	.text.motorLeftFWD,"ax",%progbits
+  61              		.align	1
+  62              		.global	motorLeftFWD
+  63              		.syntax unified
+  64              		.thumb
+  65              		.thumb_func
+  67              	motorLeftFWD:
+  68              	.LFB131:
+   7:Core/Src/motor_driver.c **** 
+   8:Core/Src/motor_driver.c **** void motorLeftFWD(void) {
+  69              		.loc 1 8 25 is_stmt 1 view -0
+  70              		.cfi_startproc
+  71              		@ args = 0, pretend = 0, frame = 0
+  72              		@ frame_needed = 0, uses_anonymous_args = 0
+  73 0000 10B5     		push	{r4, lr}
+  74              	.LCFI1:
+  75              		.cfi_def_cfa_offset 8
+  76              		.cfi_offset 4, -8
+  77              		.cfi_offset 14, -4
+   9:Core/Src/motor_driver.c ****     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
+  78              		.loc 1 9 5 view .LVU5
+  79 0002 064C     		ldr	r4, .L7
+  80 0004 0122     		movs	r2, #1
+  81 0006 2021     		movs	r1, #32
+  82 0008 2046     		mov	r0, r4
+  83 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
+  84              	.LVL2:
+  10:Core/Src/motor_driver.c ****     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+  85              		.loc 1 10 5 view .LVU6
+  86 000e 0022     		movs	r2, #0
+  87 0010 1021     		movs	r1, #16
+  88 0012 2046     		mov	r0, r4
+  89 0014 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  90              	.LVL3:
+  11:Core/Src/motor_driver.c **** }
+  91              		.loc 1 11 1 is_stmt 0 view .LVU7
+  92 0018 10BD     		pop	{r4, pc}
+  93              	.L8:
+  94 001a 00BF     		.align	2
+  95              	.L7:
+  96 001c 00040240 		.word	1073873920
+  97              		.cfi_endproc
+  98              	.LFE131:
+ 100              		.section	.text.motorLeftRVS,"ax",%progbits
+ 101              		.align	1
+ 102              		.global	motorLeftRVS
+ 103              		.syntax unified
+ 104              		.thumb
+ 105              		.thumb_func
+ 107              	motorLeftRVS:
+ 108              	.LFB132:
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s 			page 3
+
+
+  12:Core/Src/motor_driver.c **** 
+  13:Core/Src/motor_driver.c **** void motorLeftRVS(void) {
+ 109              		.loc 1 13 25 is_stmt 1 view -0
+ 110              		.cfi_startproc
+ 111              		@ args = 0, pretend = 0, frame = 0
+ 112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 113 0000 10B5     		push	{r4, lr}
+ 114              	.LCFI2:
+ 115              		.cfi_def_cfa_offset 8
+ 116              		.cfi_offset 4, -8
+ 117              		.cfi_offset 14, -4
+  14:Core/Src/motor_driver.c ****     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+ 118              		.loc 1 14 5 view .LVU9
+ 119 0002 064C     		ldr	r4, .L11
+ 120 0004 0022     		movs	r2, #0
+ 121 0006 2021     		movs	r1, #32
+ 122 0008 2046     		mov	r0, r4
+ 123 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 124              	.LVL4:
+  15:Core/Src/motor_driver.c ****     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+ 125              		.loc 1 15 5 view .LVU10
+ 126 000e 0122     		movs	r2, #1
+ 127 0010 1021     		movs	r1, #16
+ 128 0012 2046     		mov	r0, r4
+ 129 0014 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 130              	.LVL5:
+  16:Core/Src/motor_driver.c **** }
+ 131              		.loc 1 16 1 is_stmt 0 view .LVU11
+ 132 0018 10BD     		pop	{r4, pc}
+ 133              	.L12:
+ 134 001a 00BF     		.align	2
+ 135              	.L11:
+ 136 001c 00040240 		.word	1073873920
+ 137              		.cfi_endproc
+ 138              	.LFE132:
+ 140              		.section	.text.motorRightOFF,"ax",%progbits
+ 141              		.align	1
+ 142              		.global	motorRightOFF
+ 143              		.syntax unified
+ 144              		.thumb
+ 145              		.thumb_func
+ 147              	motorRightOFF:
+ 148              	.LFB133:
+  17:Core/Src/motor_driver.c **** 
+  18:Core/Src/motor_driver.c **** void motorRightOFF(void) {
+ 149              		.loc 1 18 26 is_stmt 1 view -0
+ 150              		.cfi_startproc
+ 151              		@ args = 0, pretend = 0, frame = 0
+ 152              		@ frame_needed = 0, uses_anonymous_args = 0
+ 153 0000 08B5     		push	{r3, lr}
+ 154              	.LCFI3:
+ 155              		.cfi_def_cfa_offset 8
+ 156              		.cfi_offset 3, -8
+ 157              		.cfi_offset 14, -4
+  19:Core/Src/motor_driver.c ****     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_RESET);
+ 158              		.loc 1 19 5 view .LVU13
+ 159 0002 0022     		movs	r2, #0
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s 			page 4
+
+
+ 160 0004 4FF48061 		mov	r1, #1024
+ 161 0008 0448     		ldr	r0, .L15
+ 162 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 163              	.LVL6:
+  20:Core/Src/motor_driver.c ****     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+ 164              		.loc 1 20 5 view .LVU14
+ 165 000e 0022     		movs	r2, #0
+ 166 0010 4FF48071 		mov	r1, #256
+ 167 0014 0248     		ldr	r0, .L15+4
+ 168 0016 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 169              	.LVL7:
+  21:Core/Src/motor_driver.c **** }
+ 170              		.loc 1 21 1 is_stmt 0 view .LVU15
+ 171 001a 08BD     		pop	{r3, pc}
+ 172              	.L16:
+ 173              		.align	2
+ 174              	.L15:
+ 175 001c 00040240 		.word	1073873920
+ 176 0020 00000240 		.word	1073872896
+ 177              		.cfi_endproc
+ 178              	.LFE133:
+ 180              		.section	.text.motorRightFWD,"ax",%progbits
+ 181              		.align	1
+ 182              		.global	motorRightFWD
+ 183              		.syntax unified
+ 184              		.thumb
+ 185              		.thumb_func
+ 187              	motorRightFWD:
+ 188              	.LFB134:
+  22:Core/Src/motor_driver.c **** 
+  23:Core/Src/motor_driver.c **** void motorRightFWD(void) {
+ 189              		.loc 1 23 26 is_stmt 1 view -0
+ 190              		.cfi_startproc
+ 191              		@ args = 0, pretend = 0, frame = 0
+ 192              		@ frame_needed = 0, uses_anonymous_args = 0
+ 193 0000 08B5     		push	{r3, lr}
+ 194              	.LCFI4:
+ 195              		.cfi_def_cfa_offset 8
+ 196              		.cfi_offset 3, -8
+ 197              		.cfi_offset 14, -4
+  24:Core/Src/motor_driver.c ****     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET);
+ 198              		.loc 1 24 5 view .LVU17
+ 199 0002 0122     		movs	r2, #1
+ 200 0004 4FF48061 		mov	r1, #1024
+ 201 0008 0448     		ldr	r0, .L19
+ 202 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 203              	.LVL8:
+  25:Core/Src/motor_driver.c ****     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+ 204              		.loc 1 25 5 view .LVU18
+ 205 000e 0022     		movs	r2, #0
+ 206 0010 4FF48071 		mov	r1, #256
+ 207 0014 0248     		ldr	r0, .L19+4
+ 208 0016 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 209              	.LVL9:
+  26:Core/Src/motor_driver.c **** }
+ 210              		.loc 1 26 1 is_stmt 0 view .LVU19
+ 211 001a 08BD     		pop	{r3, pc}
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s 			page 5
+
+
+ 212              	.L20:
+ 213              		.align	2
+ 214              	.L19:
+ 215 001c 00040240 		.word	1073873920
+ 216 0020 00000240 		.word	1073872896
+ 217              		.cfi_endproc
+ 218              	.LFE134:
+ 220              		.section	.text.motorRightRVS,"ax",%progbits
+ 221              		.align	1
+ 222              		.global	motorRightRVS
+ 223              		.syntax unified
+ 224              		.thumb
+ 225              		.thumb_func
+ 227              	motorRightRVS:
+ 228              	.LFB135:
+  27:Core/Src/motor_driver.c **** 
+  28:Core/Src/motor_driver.c **** void motorRightRVS(void) {
+ 229              		.loc 1 28 26 is_stmt 1 view -0
+ 230              		.cfi_startproc
+ 231              		@ args = 0, pretend = 0, frame = 0
+ 232              		@ frame_needed = 0, uses_anonymous_args = 0
+ 233 0000 08B5     		push	{r3, lr}
+ 234              	.LCFI5:
+ 235              		.cfi_def_cfa_offset 8
+ 236              		.cfi_offset 3, -8
+ 237              		.cfi_offset 14, -4
+  29:Core/Src/motor_driver.c ****     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET);
+ 238              		.loc 1 29 5 view .LVU21
+ 239 0002 0122     		movs	r2, #1
+ 240 0004 4FF48061 		mov	r1, #1024
+ 241 0008 0448     		ldr	r0, .L23
+ 242 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 243              	.LVL10:
+  30:Core/Src/motor_driver.c ****     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+ 244              		.loc 1 30 5 view .LVU22
+ 245 000e 0022     		movs	r2, #0
+ 246 0010 4FF48071 		mov	r1, #256
+ 247 0014 0248     		ldr	r0, .L23+4
+ 248 0016 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 249              	.LVL11:
+  31:Core/Src/motor_driver.c **** }...
+ 250              		.loc 1 31 1 is_stmt 0 view .LVU23
+ 251 001a 08BD     		pop	{r3, pc}
+ 252              	.L24:
+ 253              		.align	2
+ 254              	.L23:
+ 255 001c 00040240 		.word	1073873920
+ 256 0020 00000240 		.word	1073872896
+ 257              		.cfi_endproc
+ 258              	.LFE135:
+ 260              		.text
+ 261              	.Letext0:
+ 262              		.file 2 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/machine/_defa
+ 263              		.file 3 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
+ 264              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h"
+ 265              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s 			page 6
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 motor_driver.c
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:21     .text.motorLeftOFF:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:27     .text.motorLeftOFF:00000000 motorLeftOFF
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:56     .text.motorLeftOFF:0000001c $d
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:61     .text.motorLeftFWD:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:67     .text.motorLeftFWD:00000000 motorLeftFWD
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:96     .text.motorLeftFWD:0000001c $d
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:101    .text.motorLeftRVS:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:107    .text.motorLeftRVS:00000000 motorLeftRVS
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:136    .text.motorLeftRVS:0000001c $d
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:141    .text.motorRightOFF:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:147    .text.motorRightOFF:00000000 motorRightOFF
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:175    .text.motorRightOFF:0000001c $d
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:181    .text.motorRightFWD:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:187    .text.motorRightFWD:00000000 motorRightFWD
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:215    .text.motorRightFWD:0000001c $d
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:221    .text.motorRightRVS:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:227    .text.motorRightRVS:00000000 motorRightRVS
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//cc3jazU5.s:255    .text.motorRightRVS:0000001c $d
 
-NO UNDEFINED SYMBOLS
+UNDEFINED SYMBOLS
+HAL_GPIO_WritePin

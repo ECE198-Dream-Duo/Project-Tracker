@@ -24,6 +24,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "mpu6050.h"
+#include "motor_driver.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -111,7 +112,9 @@ int main(void)
     }
   }
   int16_t buf[112];
-  
+  motorLeftFWD();
+  //motorRightFWD();
+   
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -125,25 +128,19 @@ int main(void)
     calculateAngleAccel(&hi2c1, &mpu6050);
     calculateAngleGyro(&mpu6050);
 
-    sprintf(&buf, "Gx: %u.%02u Gy: %u.%02u Gz: %u.%02u Ax: %u.%02u Ay: %u.%02u Az: %u.%02u Yaw: %u.%02u\r\n", 
-    ((uint16_t)mpu6050.gyroX),((uint16_t)mpu6050.gyroX),
-    ((uint16_t)mpu6050.gyroY),((uint16_t)mpu6050.gyroY),
-    ((uint16_t)mpu6050.gyroZ),((uint16_t)mpu6050.gyroZ),
-    ((uint16_t)mpu6050.accelX),((uint16_t)mpu6050.accelX),
-    ((uint16_t)mpu6050.accelY),((uint16_t)mpu6050.accelY),
-    ((uint16_t)mpu6050.accelZ),((uint16_t)mpu6050.accelZ),
-    ((uint16_t)mpu6050.yawAngle),((uint16_t)mpu6050.yawAngle%100)
-    ); 
-    //sprintf(&buf, "Pitch: %f, Roll: %f \r\n", mpu6050.pitchAngle, mpu6050.rollAngle);
     HAL_UART_Transmit(&huart2, buf, strlen((char*)buf), 100); 
-    HAL_GPIO_TogglePin(GPIOH, GPIO_PIN_4);
+    HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
     HAL_GPIO_TogglePin(GPIOA, LD2_Pin);
-    HAL_Delay(100);
+    HAL_Delay(1);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
-
+// IMPORTANT!!!!!!!
+// D4 maps to GPIOB, GPIO_PIN_5
+// D5 maps to GPIOB, GPIO_PIN_4
+// D6 maps to GPIOB, GPIO_PIN_10
+// D7 maps to GPIOA, GPIO_PIN_8
 /**
   * @brief System Clock Configuration
   * @retval None
@@ -244,7 +241,8 @@ static void MX_TIM3_Init(void)
 
   /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 84;
+  // prescaler changed from 72
+  htim3.Init.Prescaler = 72;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim3.Init.Period = 20000;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;

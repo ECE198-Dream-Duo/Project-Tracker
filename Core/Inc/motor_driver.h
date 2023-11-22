@@ -6,7 +6,7 @@ void motorLeftFWD(void);
 
 void motorLeftRVS(void);
 
-void motorRightOFF(void);
+void motorLeftOFF(void);
 
 void motorRightFWD(void);
 
