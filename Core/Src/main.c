@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include "mpu6050.h"
 #include "motor_driver.h"
+#include "pid.c"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -111,10 +112,12 @@ int main(void)
     HAL_Delay(200);
     }
   }
-  int16_t buf[112];
-  motorLeftFWD();
-  //motorRightFWD();
-   
+ 
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+  
+  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, speedControl(255));
+  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, speedControl(255));
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -128,8 +131,10 @@ int main(void)
     calculateAngleAccel(&hi2c1, &mpu6050);
     calculateAngleGyro(&mpu6050);
 
-    HAL_UART_Transmit(&huart2, buf, strlen((char*)buf), 100); 
-    HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
+    motorLeftFWD();
+    motorRightFWD();
+
+   
     HAL_GPIO_TogglePin(GPIOA, LD2_Pin);
     HAL_Delay(1);
     /* USER CODE BEGIN 3 */
@@ -246,7 +251,7 @@ static void MX_TIM3_Init(void)
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim3.Init.Period = 20000;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
   {
     Error_Handler();

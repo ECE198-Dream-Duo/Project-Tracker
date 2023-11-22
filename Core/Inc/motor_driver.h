@@ -13,3 +13,5 @@ void motorRightFWD(void);
 void motorRightRVS(void);
 
 void motorRightOFF(void);
+
+int speedControl(int speed);

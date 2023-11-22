@@ -1,0 +1,282 @@
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccDmpPpf.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"pid.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/pid.c"
+  20              		.section	.text.setParam,"ax",%progbits
+  21              		.align	1
+  22              		.global	setParam
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	setParam:
+  28              	.LVL0:
+  29              	.LFB130:
+   1:Core/Src/pid.c **** #include "pid.h"
+   2:Core/Src/pid.c **** 
+   3:Core/Src/pid.c **** void setParam(pid* pid, double kp, double ki, double kd, double setPoint) {
+  30              		.loc 1 3 75 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+   4:Core/Src/pid.c ****     pid->kp = kp;
+  35              		.loc 1 4 5 view .LVU1
+  36              		.loc 1 4 13 is_stmt 0 view .LVU2
+  37 0000 80ED020B 		vstr.64	d0, [r0, #8]
+   5:Core/Src/pid.c ****     pid->ki = ki;
+  38              		.loc 1 5 5 is_stmt 1 view .LVU3
+  39              		.loc 1 5 13 is_stmt 0 view .LVU4
+  40 0004 80ED001B 		vstr.64	d1, [r0]
+   6:Core/Src/pid.c ****     pid->kd = kd;
+  41              		.loc 1 6 5 is_stmt 1 view .LVU5
+  42              		.loc 1 6 13 is_stmt 0 view .LVU6
+  43 0008 80ED042B 		vstr.64	d2, [r0, #16]
+   7:Core/Src/pid.c ****     pid->pastError = 0;
+  44              		.loc 1 7 5 is_stmt 1 view .LVU7
+  45              		.loc 1 7 20 is_stmt 0 view .LVU8
+  46 000c 0022     		movs	r2, #0
+  47 000e 0023     		movs	r3, #0
+  48 0010 C0E90823 		strd	r2, [r0, #32]
+   8:Core/Src/pid.c ****     pid->integral = 0;
+  49              		.loc 1 8 5 is_stmt 1 view .LVU9
+  50              		.loc 1 8 19 is_stmt 0 view .LVU10
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccDmpPpf.s 			page 2
+
+
+  51 0014 C0E91023 		strd	r2, [r0, #64]
+   9:Core/Src/pid.c ****     pid->setPoint = setPoint;
+  52              		.loc 1 9 5 is_stmt 1 view .LVU11
+  53              		.loc 1 9 19 is_stmt 0 view .LVU12
+  54 0018 80ED123B 		vstr.64	d3, [r0, #72]
+  10:Core/Src/pid.c **** 
+  11:Core/Src/pid.c ****     pid->integralCap = 150;
+  55              		.loc 1 11 5 is_stmt 1 view .LVU13
+  56              		.loc 1 11 22 is_stmt 0 view .LVU14
+  57 001c 9623     		movs	r3, #150
+  58 001e 8362     		str	r3, [r0, #40]
+  12:Core/Src/pid.c **** }
+  59              		.loc 1 12 1 view .LVU15
+  60 0020 7047     		bx	lr
+  61              		.cfi_endproc
+  62              	.LFE130:
+  64              		.global	__aeabi_dsub
+  65              		.global	__aeabi_dmul
+  66              		.global	__aeabi_dadd
+  67              		.global	__aeabi_d2iz
+  68              		.section	.text.calculatePID,"ax",%progbits
+  69              		.align	1
+  70              		.global	calculatePID
+  71              		.syntax unified
+  72              		.thumb
+  73              		.thumb_func
+  75              	calculatePID:
+  76              	.LVL1:
+  77              	.LFB131:
+  13:Core/Src/pid.c **** 
+  14:Core/Src/pid.c **** void calculatePID(pid* pid, MPU6050* imu) {
+  78              		.loc 1 14 43 is_stmt 1 view -0
+  79              		.cfi_startproc
+  80              		@ args = 0, pretend = 0, frame = 0
+  81              		@ frame_needed = 0, uses_anonymous_args = 0
+  82              		.loc 1 14 43 is_stmt 0 view .LVU17
+  83 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  84              	.LCFI0:
+  85              		.cfi_def_cfa_offset 40
+  86              		.cfi_offset 3, -40
+  87              		.cfi_offset 4, -36
+  88              		.cfi_offset 5, -32
+  89              		.cfi_offset 6, -28
+  90              		.cfi_offset 7, -24
+  91              		.cfi_offset 8, -20
+  92              		.cfi_offset 9, -16
+  93              		.cfi_offset 10, -12
+  94              		.cfi_offset 11, -8
+  95              		.cfi_offset 14, -4
+  96 0004 0446     		mov	r4, r0
+  97 0006 0D46     		mov	r5, r1
+  15:Core/Src/pid.c ****     pid->error = pid->setPoint - imu->yawAngle;
+  98              		.loc 1 15 5 is_stmt 1 view .LVU18
+  99              		.loc 1 15 32 is_stmt 0 view .LVU19
+ 100 0008 D1E91823 		ldrd	r2, [r1, #96]
+ 101 000c D0E91201 		ldrd	r0, [r0, #72]
+ 102              	.LVL2:
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccDmpPpf.s 			page 3
+
+
+ 103              		.loc 1 15 32 view .LVU20
+ 104 0010 FFF7FEFF 		bl	__aeabi_dsub
+ 105              	.LVL3:
+ 106              		.loc 1 15 32 view .LVU21
+ 107 0014 0646     		mov	r6, r0
+ 108 0016 0F46     		mov	r7, r1
+ 109              		.loc 1 15 16 view .LVU22
+ 110 0018 C4E90667 		strd	r6, [r4, #24]
+  16:Core/Src/pid.c **** 
+  17:Core/Src/pid.c ****     pid->porportional = pid->kp*pid->error;
+ 111              		.loc 1 17 5 is_stmt 1 view .LVU23
+ 112              		.loc 1 17 32 is_stmt 0 view .LVU24
+ 113 001c D4E90223 		ldrd	r2, [r4, #8]
+ 114 0020 FFF7FEFF 		bl	__aeabi_dmul
+ 115              	.LVL4:
+ 116 0024 8246     		mov	r10, r0
+ 117 0026 8B46     		mov	fp, r1
+ 118              		.loc 1 17 23 view .LVU25
+ 119 0028 C4E90CAB 		strd	r10, [r4, #48]
+  18:Core/Src/pid.c **** 
+  19:Core/Src/pid.c ****     if (abs(pid->integral + pid->error*imu->dt) > pid->integralCap) {
+ 120              		.loc 1 19 5 is_stmt 1 view .LVU26
+ 121              		.loc 1 19 16 is_stmt 0 view .LVU27
+ 122 002c D4E91089 		ldrd	r8, [r4, #64]
+ 123              		.loc 1 19 39 view .LVU28
+ 124 0030 D5E91A23 		ldrd	r2, [r5, #104]
+ 125 0034 3046     		mov	r0, r6
+ 126 0036 3946     		mov	r1, r7
+ 127 0038 FFF7FEFF 		bl	__aeabi_dmul
+ 128              	.LVL5:
+ 129 003c 0246     		mov	r2, r0
+ 130 003e 0B46     		mov	r3, r1
+ 131              		.loc 1 19 27 view .LVU29
+ 132 0040 4046     		mov	r0, r8
+ 133 0042 4946     		mov	r1, r9
+ 134 0044 FFF7FEFF 		bl	__aeabi_dadd
+ 135              	.LVL6:
+ 136 0048 8046     		mov	r8, r0
+ 137 004a 8946     		mov	r9, r1
+ 138              		.loc 1 19 9 view .LVU30
+ 139 004c FFF7FEFF 		bl	__aeabi_d2iz
+ 140              	.LVL7:
+ 141 0050 80EAE073 		eor	r3, r0, r0, asr #31
+ 142 0054 A3EBE073 		sub	r3, r3, r0, asr #31
+ 143              		.loc 1 19 54 view .LVU31
+ 144 0058 A26A     		ldr	r2, [r4, #40]
+ 145              		.loc 1 19 8 view .LVU32
+ 146 005a 9342     		cmp	r3, r2
+ 147 005c 35DD     		ble	.L3
+  20:Core/Src/pid.c ****         pid->integral = 0;
+ 148              		.loc 1 20 9 is_stmt 1 view .LVU33
+ 149              		.loc 1 20 23 is_stmt 0 view .LVU34
+ 150 005e 4FF00008 		mov	r8, #0
+ 151 0062 4FF00009 		mov	r9, #0
+ 152 0066 C4E91089 		strd	r8, [r4, #64]
+  21:Core/Src/pid.c ****         pid->integral = pid->integral + pid->error*imu->dt;
+ 153              		.loc 1 21 9 is_stmt 1 view .LVU35
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccDmpPpf.s 			page 4
+
+
+ 154              		.loc 1 21 51 is_stmt 0 view .LVU36
+ 155 006a D5E91A23 		ldrd	r2, [r5, #104]
+ 156 006e 3046     		mov	r0, r6
+ 157 0070 3946     		mov	r1, r7
+ 158 0072 FFF7FEFF 		bl	__aeabi_dmul
+ 159              	.LVL8:
+ 160              		.loc 1 21 39 view .LVU37
+ 161 0076 4246     		mov	r2, r8
+ 162 0078 4B46     		mov	r3, r9
+ 163 007a FFF7FEFF 		bl	__aeabi_dadd
+ 164              	.LVL9:
+ 165              		.loc 1 21 23 view .LVU38
+ 166 007e C4E91001 		strd	r0, [r4, #64]
+ 167              	.L4:
+  22:Core/Src/pid.c ****     }
+  23:Core/Src/pid.c ****     else {
+  24:Core/Src/pid.c ****         pid->integral = pid->integral + pid->error*imu->dt;
+  25:Core/Src/pid.c ****     }
+  26:Core/Src/pid.c **** 
+  27:Core/Src/pid.c ****     pid->derivative = pid->kd*(pid->error-pid->pastError);
+ 168              		.loc 1 27 5 is_stmt 1 view .LVU39
+ 169              		.loc 1 27 26 is_stmt 0 view .LVU40
+ 170 0082 D4E90489 		ldrd	r8, [r4, #16]
+ 171              		.loc 1 27 42 view .LVU41
+ 172 0086 D4E90823 		ldrd	r2, [r4, #32]
+ 173 008a 3046     		mov	r0, r6
+ 174 008c 3946     		mov	r1, r7
+ 175 008e FFF7FEFF 		bl	__aeabi_dsub
+ 176              	.LVL10:
+ 177 0092 0246     		mov	r2, r0
+ 178 0094 0B46     		mov	r3, r1
+ 179              		.loc 1 27 30 view .LVU42
+ 180 0096 4046     		mov	r0, r8
+ 181 0098 4946     		mov	r1, r9
+ 182 009a FFF7FEFF 		bl	__aeabi_dmul
+ 183              	.LVL11:
+ 184 009e 8046     		mov	r8, r0
+ 185 00a0 8946     		mov	r9, r1
+ 186              		.loc 1 27 21 view .LVU43
+ 187 00a2 C4E90E89 		strd	r8, [r4, #56]
+  28:Core/Src/pid.c **** 
+  29:Core/Src/pid.c ****     pid->pastError = pid->error;
+ 188              		.loc 1 29 5 is_stmt 1 view .LVU44
+ 189              		.loc 1 29 20 is_stmt 0 view .LVU45
+ 190 00a6 C4E90867 		strd	r6, [r4, #32]
+  30:Core/Src/pid.c ****     pid->output = pid->porportional + pid->integral + pid->derivative;
+ 191              		.loc 1 30 5 is_stmt 1 view .LVU46
+ 192              		.loc 1 30 37 is_stmt 0 view .LVU47
+ 193 00aa D4E91023 		ldrd	r2, [r4, #64]
+ 194 00ae 5046     		mov	r0, r10
+ 195 00b0 5946     		mov	r1, fp
+ 196 00b2 FFF7FEFF 		bl	__aeabi_dadd
+ 197              	.LVL12:
+ 198 00b6 0246     		mov	r2, r0
+ 199 00b8 0B46     		mov	r3, r1
+ 200              		.loc 1 30 53 view .LVU48
+ 201 00ba 4046     		mov	r0, r8
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccDmpPpf.s 			page 5
+
+
+ 202 00bc 4946     		mov	r1, r9
+ 203 00be FFF7FEFF 		bl	__aeabi_dadd
+ 204              	.LVL13:
+ 205              		.loc 1 30 17 view .LVU49
+ 206 00c2 C4E91401 		strd	r0, [r4, #80]
+  31:Core/Src/pid.c **** }
+ 207              		.loc 1 31 1 view .LVU50
+ 208 00c6 BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 209              	.LVL14:
+ 210              	.L3:
+  24:Core/Src/pid.c ****     }
+ 211              		.loc 1 24 9 is_stmt 1 view .LVU51
+  24:Core/Src/pid.c ****     }
+ 212              		.loc 1 24 23 is_stmt 0 view .LVU52
+ 213 00ca C4E91089 		strd	r8, [r4, #64]
+ 214 00ce D8E7     		b	.L4
+ 215              		.cfi_endproc
+ 216              	.LFE131:
+ 218              		.text
+ 219              	.Letext0:
+ 220              		.file 2 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/machine/_defa
+ 221              		.file 3 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
+ 222              		.file 4 "Core/Inc/mpu6050.h"
+ 223              		.file 5 "Core/Inc/pid.h"
+ARM GAS  /var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccDmpPpf.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pid.c
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccDmpPpf.s:21     .text.setParam:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccDmpPpf.s:27     .text.setParam:00000000 setParam
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccDmpPpf.s:69     .text.calculatePID:00000000 $t
+/var/folders/w0/_w50rr155tb53qvt2cy6pxh80000gn/T//ccDmpPpf.s:75     .text.calculatePID:00000000 calculatePID
+
+UNDEFINED SYMBOLS
+__aeabi_dsub
+__aeabi_dmul
+__aeabi_dadd
+__aeabi_d2iz

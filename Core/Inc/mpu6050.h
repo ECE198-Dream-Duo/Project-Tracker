@@ -2,6 +2,8 @@
 #include <math.h>
 #include "main.h"
 
+#ifndef MPU6050_H
+#define MPU6050_H
 typedef struct {
     int16_t accelX_RAW;
     int16_t accelY_RAW;
@@ -44,3 +46,4 @@ void readGyroGx(I2C_HandleTypeDef *hi2c, MPU6050* data);
 
 void readAccelAx(I2C_HandleTypeDef *hi2c, MPU6050* data);
 
+#endif
