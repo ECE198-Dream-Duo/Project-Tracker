@@ -23,7 +23,8 @@
 /* USER CODE BEGIN Includes */
 #include <string.h>
 #include <stdio.h>
-#include "mpu6050.h"
+#include "Components.h"
+#include "stm32f4xx_hal_flash_ex.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -73,45 +74,23 @@ static void MX_USART2_UART_Init(void);
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-  MPU6050 mpu6050;
-  mpu6050.yawAngle = 0;
-  mpu6050.normalizeTick = 0;
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
   SystemClock_Config();
+  /* GPIO Ports Initialization */
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOH_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
-  /* USER CODE BEGIN SysInit */
+  // Go through each Component and Initialize
+  IRInitialize(1); // Initializes GPIO and ADC
 
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
   MX_I2C1_Init();
   MX_TIM3_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  int x = mpu6050Init(&hi2c1);
-  if (x == 1) {
-    for (int i = 0; i < 20; i++) {
-       HAL_GPIO_TogglePin(GPIOA, LD2_Pin);
-    HAL_Delay(50);
-     HAL_GPIO_TogglePin(GPIOA, LD2_Pin);
-    HAL_Delay(200);
-    }
-  }
   int16_t buf[112];
-  
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -119,25 +98,10 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    readGyroData(&hi2c1, &mpu6050);
-    readAccelData(&hi2c1, &mpu6050);
-    readTempData(&hi2c1, &mpu6050);
-    calculateAngleAccel(&hi2c1, &mpu6050);
-    calculateAngleGyro(&mpu6050);
 
-    sprintf(&buf, "Gx: %u.%02u Gy: %u.%02u Gz: %u.%02u Ax: %u.%02u Ay: %u.%02u Az: %u.%02u Yaw: %u.%02u\r\n", 
-    ((uint16_t)mpu6050.gyroX),((uint16_t)mpu6050.gyroX),
-    ((uint16_t)mpu6050.gyroY),((uint16_t)mpu6050.gyroY),
-    ((uint16_t)mpu6050.gyroZ),((uint16_t)mpu6050.gyroZ),
-    ((uint16_t)mpu6050.accelX),((uint16_t)mpu6050.accelX),
-    ((uint16_t)mpu6050.accelY),((uint16_t)mpu6050.accelY),
-    ((uint16_t)mpu6050.accelZ),((uint16_t)mpu6050.accelZ),
-    ((uint16_t)mpu6050.yawAngle),((uint16_t)mpu6050.yawAngle%100)
-    ); 
+    sprintf(&buf, "Results: %d\r\n", (int)GetColor()); 
     //sprintf(&buf, "Pitch: %f, Roll: %f \r\n", mpu6050.pitchAngle, mpu6050.rollAngle);
     HAL_UART_Transmit(&huart2, buf, strlen((char*)buf), 100); 
-    HAL_GPIO_TogglePin(GPIOH, GPIO_PIN_4);
-    HAL_GPIO_TogglePin(GPIOA, LD2_Pin);
     HAL_Delay(100);
     /* USER CODE BEGIN 3 */
   }
@@ -330,12 +294,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 /* USER CODE BEGIN MX_GPIO_Init_1 */
 /* USER CODE END MX_GPIO_Init_1 */
-
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOH_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, LD2_Pin|GPIO_PIN_8, GPIO_PIN_RESET);

@@ -1,0 +1,10 @@
+{
+  "C_Cpp.default.compilerPath": "C:\\msys64\\ucrt64\\bin\\gcc.exe",
+  "files.associations": {
+    "stm32f4xx_hal_exti.h": "c",
+    "stdint.h": "c",
+    "stm32f4xx_hal_flash_ex.h": "c",
+    "stm32f4xx_hal_def.h": "c",
+    "stm32f4xx.h": "c"
+  }
+}
